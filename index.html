@@ -3,574 +3,457 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Activités FLE — Espace Numérique</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>ULF Ressources — Espace Pédagogique Numérique</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bleu: #1a3a5c;
-    --bleu-clair: #2d6a9f;
-    --or: #c9a84c;
-    --creme: #f8f4ee;
-    --texte: #2c2c2c;
-    --gris: #7a7a7a;
-    --card-bg: #ffffff;
-    --shadow: 0 4px 24px rgba(26,58,92,0.10);
+    --bleu:       #1a3f6f;
+    --bleu-mid:   #2255a0;
+    --bleu-clair: #3a72c0;
+    --or:         #c9a84c;
+    --or-clair:   #e8c96a;
+    --or-pale:    #f5e9c8;
+    --blanc:      #ffffff;
+    --creme:      #faf7f2;
+    --gris:       #6b7280;
+    --gris-clair: #f3f4f6;
+    --texte:      #1f2937;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--creme); color: var(--texte); min-height: 100vh; overflow-x: hidden; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s ease both; }
+  .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+  .d3 { animation-delay: 0.25s; } .d4 { animation-delay: 0.38s; }
+  .d5 { animation-delay: 0.5s; }
+
+  /* TOPBAR */
+  .topbar { background: var(--bleu); padding: 9px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .topbar span { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+  .topbar .or { color: var(--or); font-size: 11px; }
+
+  /* HERO */
+  .hero { background: var(--bleu); position: relative; overflow: hidden; padding: 60px 48px 76px; }
+  .hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 420px; height: 420px; border: 1px solid rgba(201,168,76,0.1); border-radius: 50%; pointer-events: none; }
+  .hero::after  { content: ''; position: absolute; top: -55px;  right: -55px;  width: 290px; height: 290px; border: 1px solid rgba(201,168,76,0.16); border-radius: 50%; pointer-events: none; }
+  .hero-gold-line { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--or) 30%, var(--or-clair) 50%, var(--or) 70%, transparent); }
+  .hero-inner { max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+
+  .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .hero-eyebrow .ligne { width: 30px; height: 1px; background: var(--or); }
+  .hero-eyebrow span { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--or); }
+
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--blanc); line-height: 1.1; margin-bottom: 18px; }
+  .hero h1 em { font-style: italic; color: var(--or-clair); }
+  .hero-desc { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.62); line-height: 1.85; max-width: 500px; margin-bottom: 28px; }
+
+  .hero-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { padding: 5px 13px; border-radius: 20px; font-size: 11px; font-weight: 500; border: 1px solid; }
+  .pill-or    { border-color: var(--or); color: var(--or); background: rgba(201,168,76,0.08); }
+  .pill-blanc { border-color: rgba(255,255,255,0.22); color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.04); }
+
+  .hero-monogram { width: 130px; height: 130px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.28); display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
+  .hero-monogram::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.13); }
+  .hero-monogram span { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600; color: var(--or); position: relative; z-index: 1; }
+
+  @media (max-width: 680px) {
+    .hero-monogram { display: none; }
+    .hero, .topbar { padding-left: 20px; padding-right: 20px; }
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--creme);
-    color: var(--texte);
-    min-height: 100vh;
-  }
-
-  /* HEADER */
-  header {
-    background: var(--bleu);
-    color: white;
-    padding: 48px 40px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  header::before {
-    content: '«';
-    font-family: 'Playfair Display', serif;
-    font-size: 280px;
-    color: rgba(255,255,255,0.04);
-    position: absolute;
-    top: -60px;
-    left: -20px;
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 300px; height: 3px;
-    background: linear-gradient(90deg, transparent, var(--or));
-  }
-
-  .header-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .header-tag {
-    display: inline-block;
-    background: var(--or);
-    color: var(--bleu);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-  }
-
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 12px;
-  }
-
-  header h1 em {
-    color: var(--or);
-    font-style: italic;
-  }
-
-  header p {
-    font-size: 15px;
-    color: rgba(255,255,255,0.7);
-    max-width: 520px;
-    line-height: 1.7;
-  }
-
-  .header-meta {
-    margin-top: 28px;
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.6);
-  }
-
-  .meta-item span.dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--or);
-    display: inline-block;
-  }
+  /* STATS */
+  .stats-bar { background: var(--blanc); border-bottom: 1px solid rgba(0,0,0,0.06); padding: 0 48px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+  .stats-inner { max-width: 1000px; margin: 0 auto; display: flex; }
+  .stat-item { flex: 1; padding: 20px 0; text-align: center; border-right: 1px solid rgba(0,0,0,0.06); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; color: var(--bleu-mid); line-height: 1; margin-bottom: 3px; }
+  .stat-label { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--gris); }
+  @media (max-width: 500px) { .stats-bar { padding: 0 12px; } .stat-num { font-size: 22px; } .stat-label { font-size: 9px; } }
 
   /* FILTRES */
-  .filtres-bar {
-    background: white;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    padding: 0 40px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  }
-
-  .filtres-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    display: flex;
-    gap: 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding: 12px 0;
-  }
-
-  .filtre-btn {
-    white-space: nowrap;
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1.5px solid rgba(26,58,92,0.15);
-    background: transparent;
-    color: var(--gris);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .filtre-btn:hover {
-    border-color: var(--bleu-clair);
-    color: var(--bleu-clair);
-  }
-
-  .filtre-btn.actif {
-    background: var(--bleu);
-    border-color: var(--bleu);
-    color: white;
-  }
+  .filtres-zone { background: var(--blanc); position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 10px rgba(0,0,0,0.04); padding: 0 48px; }
+  .filtres-inner { max-width: 1000px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 11px 0; }
+  .filtres-inner::-webkit-scrollbar { display: none; }
+  .f-btn { white-space: nowrap; padding: 6px 16px; border-radius: 3px; border: 1.5px solid transparent; background: var(--gris-clair); color: var(--gris); font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; cursor: pointer; transition: all 0.2s; letter-spacing: 0.3px; }
+  .f-btn:hover { background: var(--or-pale); color: var(--bleu-mid); }
+  .sous-niveaux-bar { border-top: 1px solid rgba(0,0,0,0.06); background: #f8f9ff; padding: 0 48px; }
+  .sous-niveaux-bar .filtres-inner { padding: 8px 0; }
+  .f-btn-sub { white-space: nowrap; padding: 5px 14px; border-radius: 3px; border: 1.5px solid transparent; background: white; color: var(--gris); font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .f-btn-sub:hover { background: var(--or-pale); color: var(--bleu-mid); }
+  .f-btn-sub.actif { background: var(--bleu-clair); color: var(--blanc); border-color: var(--bleu-clair); }
+  @media (max-width: 500px) { .sous-niveaux-bar { padding: 0 12px; } }
+  .f-btn.actif { background: var(--bleu-mid); color: var(--blanc); border-color: var(--bleu-mid); }
+  @media (max-width: 500px) { .filtres-zone { padding: 0 12px; } }
 
   /* MAIN */
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 40px 80px;
-  }
+  main { max-width: 1000px; margin: 0 auto; padding: 44px 48px 100px; }
+  @media (max-width: 500px) { main { padding: 24px 16px 80px; } }
 
-  .section-titre {
-    font-family: 'Playfair Display', serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--gris);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .section-label .trait { width: 24px; height: 2px; background: var(--or); flex-shrink: 0; }
+  .section-label span { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gris); white-space: nowrap; }
+  .section-label .trait-long { flex: 1; height: 1px; background: rgba(0,0,0,0.07); }
 
-  .section-titre::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(0,0,0,0.08);
-  }
+  /* GRILLE */
+  .grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 52px; }
+  .carte { background: var(--blanc); border-radius: 3px; box-shadow: 0 2px 12px rgba(13,31,53,0.07); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; position: relative; }
+  .carte::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--or), transparent); opacity: 0; transition: opacity 0.3s; }
+  .carte:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(13,31,53,0.13); }
+  .carte:hover::before { opacity: 1; }
 
-  /* GRILLE ACTIVITÉS */
-  .grille {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-    margin-bottom: 48px;
-  }
+  .carte-barre { height: 4px; }
+  .maternelle .carte-barre { background: linear-gradient(90deg, #fbcfe8, #f9a8d4); }
+  .cycle1     .carte-barre { background: linear-gradient(90deg, #6ee7b7, #34d399); }
+  .cycle2     .carte-barre { background: linear-gradient(90deg, #a78bfa, #8b5cf6); }
+  .cycle3     .carte-barre { background: linear-gradient(90deg, #fdba74, #fb923c); }
+  .secondaire .carte-barre { background: linear-gradient(90deg, #fca5a5, #f87171); }
 
-  .carte {
-    background: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    transition: transform 0.25s, box-shadow 0.25s;
-    border: 1px solid rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-  }
+  .carte-body { padding: 20px 20px 14px; flex: 1; display: flex; flex-direction: column; }
+  .carte-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tag { font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+  .tag-niveau { background: rgba(13,31,53,0.07); color: var(--bleu-mid); }
+  .tag-type   { background: var(--or-pale); color: #7a5c10; }
+  .carte h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--bleu); margin-bottom: 7px; line-height: 1.3; }
+  .carte p { font-size: 12px; color: var(--gris); line-height: 1.65; flex: 1; }
 
-  .carte:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(26,58,92,0.15);
-  }
-
-  .carte-header {
-    height: 8px;
-  }
-
-  /* Couleurs par niveau */
-  .niveau-ms .carte-header { background: #f9a8d4; }
-  .niveau-gs .carte-header { background: #fcd34d; }
-  .niveau-eb1 .carte-header, .niveau-eb2 .carte-header { background: #6ee7b7; }
-  .niveau-eb3 .carte-header, .niveau-eb4 .carte-header { background: #7dd3fc; }
-  .niveau-eb5 .carte-header, .niveau-eb6 .carte-header { background: #a78bfa; }
-  .niveau-eb7 .carte-header, .niveau-eb8 .carte-header { background: #fb923c; }
-  .niveau-cs .carte-header { background: #f87171; }
-
-  .carte-body {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .carte-badges {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-
-  .badge {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-  }
-
-  .badge-niveau {
-    background: rgba(26,58,92,0.08);
-    color: var(--bleu);
-  }
-
-  .badge-type {
-    background: rgba(201,168,76,0.15);
-    color: #8b6914;
-  }
-
-  .carte h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--bleu);
-    margin-bottom: 8px;
-    line-height: 1.3;
-  }
-
-  .carte p {
-    font-size: 13px;
-    color: var(--gris);
-    line-height: 1.6;
-    flex: 1;
-    margin-bottom: 16px;
-  }
-
-  .carte-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    background: rgba(248,244,238,0.5);
-  }
-
-  .carte-auteur {
-    font-size: 11px;
-    color: var(--gris);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .auteur-avatar {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: var(--bleu);
-    color: white;
-    font-size: 10px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .btn-ouvrir {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--bleu);
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: 6px;
-    transition: background 0.2s;
-  }
-
-  .btn-ouvrir:hover {
-    background: var(--bleu-clair);
-  }
-
-  .btn-ouvrir svg {
-    width: 12px; height: 12px;
-  }
+  .carte-footer { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-top: 1px solid rgba(0,0,0,0.05); background: rgba(250,247,242,0.6); }
+  .auteur { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--gris); }
+  .auteur-initiales { width: 24px; height: 24px; border-radius: 50%; background: var(--bleu-mid); color: var(--blanc); font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .btn-ouvrir { display: inline-flex; align-items: center; gap: 5px; background: var(--bleu); color: var(--blanc); text-decoration: none; font-size: 10px; font-weight: 600; letter-spacing: 0.8px; padding: 7px 14px; border-radius: 2px; transition: background 0.2s; text-transform: uppercase; }
+  .btn-ouvrir:hover { background: var(--bleu-clair); }
 
   /* ZONE VIDE */
-  .zone-vide {
-    text-align: center;
-    padding: 60px 20px;
-    background: white;
-    border-radius: 12px;
-    border: 2px dashed rgba(26,58,92,0.12);
-    margin-bottom: 48px;
-  }
+  .zone-vide { text-align: center; padding: 60px 24px; background: var(--blanc); border-radius: 3px; border: 1px dashed rgba(0,0,0,0.1); margin-bottom: 48px; display: none; }
+  .zone-vide .ic { font-size: 36px; margin-bottom: 12px; opacity: 0.35; }
+  .zone-vide h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--bleu); margin-bottom: 6px; }
+  .zone-vide p { font-size: 13px; color: var(--gris); }
 
-  .zone-vide .icone {
-    font-size: 48px;
-    margin-bottom: 16px;
-  }
+  /* SECTION HOW */
+  .section-how { background: var(--blanc); border-radius: 3px; border: 1px solid rgba(0,0,0,0.05); padding: 36px 38px; margin-bottom: 52px; box-shadow: 0 2px 12px rgba(13,31,53,0.05); }
+  .section-how h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--bleu); margin-bottom: 26px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 22px; }
+  .how-step { text-align: center; }
+  .how-num { width: 42px; height: 42px; border-radius: 50%; background: var(--bleu); color: var(--or); font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+  .how-step h4 { font-size: 12px; font-weight: 600; color: var(--bleu-mid); margin-bottom: 5px; }
+  .how-step p { font-size: 11px; color: var(--gris); line-height: 1.65; }
 
-  .zone-vide h3 {
-    font-family: 'Playfair Display', serif;
-    color: var(--bleu);
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
+  /* SECTION ECOLES */
+  .section-ecoles { background: var(--bleu); border-radius: 3px; padding: 36px 38px; margin-bottom: 52px; position: relative; overflow: hidden; }
+  .section-ecoles::after { content: ''; position: absolute; bottom: -60px; right: -60px; width: 220px; height: 220px; border: 1px solid rgba(201,168,76,0.1); border-radius: 50%; }
+  .section-ecoles h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--blanc); margin-bottom: 4px; }
+  .section-ecoles > p { font-size: 12px; color: rgba(255,255,255,0.48); margin-bottom: 22px; }
+  .ecoles-liste { display: flex; flex-wrap: wrap; gap: 9px; position: relative; z-index: 1; }
+  .ecole-tag { padding: 7px 16px; border: 1px solid rgba(201,168,76,0.3); border-radius: 2px; font-size: 11px; font-weight: 500; color: var(--or-clair); background: rgba(201,168,76,0.05); letter-spacing: 0.3px; transition: all 0.2s; }
+  .ecole-tag:hover { background: rgba(201,168,76,0.14); border-color: var(--or); }
 
-  .zone-vide p {
-    color: var(--gris);
-    font-size: 14px;
-    max-width: 400px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  /* COMMENT AJOUTER */
-  .guide-box {
-    background: linear-gradient(135deg, var(--bleu) 0%, #2d6a9f 100%);
-    color: white;
-    border-radius: 14px;
-    padding: 32px 36px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 48px;
-  }
-
-  @media (max-width: 600px) {
-    .guide-box { grid-template-columns: 1fr; }
-    header, main, .filtres-bar { padding-left: 20px; padding-right: 20px; }
-  }
-
-  .guide-box h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    margin-bottom: 16px;
-    color: var(--or);
-    grid-column: 1 / -1;
-  }
-
-  .guide-etape {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-
-  .etape-num {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--or);
-    color: var(--bleu);
-    font-weight: 700;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .etape-texte strong {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-
-  .etape-texte span {
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.5;
-  }
+  /* SECTION RESPONSABLE */
+  .section-responsable { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 52px; }
+  @media (max-width: 580px) { .section-responsable { grid-template-columns: 1fr; } }
+  .card-resp { background: var(--blanc); border-radius: 3px; padding: 26px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 2px 12px rgba(13,31,53,0.05); }
+  .card-resp .label { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--or); margin-bottom: 10px; }
+  .card-resp h3 { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 700; color: var(--bleu); margin-bottom: 8px; }
+  .card-resp p { font-size: 12px; color: var(--gris); line-height: 1.7; }
+  .card-resp .detail { margin-top: 14px; font-size: 11px; color: var(--gris); display: flex; flex-direction: column; gap: 5px; }
+  .card-resp .detail span { display: flex; align-items: center; gap: 8px; }
+  .card-resp .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--or); flex-shrink: 0; }
 
   /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 24px;
-    font-size: 12px;
-    color: var(--gris);
-    border-top: 1px solid rgba(0,0,0,0.07);
-  }
-
-  footer span {
-    color: var(--or);
-  }
-
-  /* ÉTAT VIDE filtré */
-  .cache { display: none; }
+  footer { background: var(--bleu); padding: 30px 48px; text-align: center; }
+  .logo-footer { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--or); margin-bottom: 6px; letter-spacing: 1px; }
+  .footer-ligne { width: 36px; height: 1px; background: var(--or); margin: 12px auto; opacity: 0.35; }
+  footer p { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.9; }
+  footer .gold { color: var(--or); }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="header-tag">Espace Numérique Pédagogique</div>
-    <h1>Activités <em>Françaises</em><br>Interactives</h1>
-    <p>Toutes les activités HTML réalisées par les enseignants, organisées par niveau et accessibles en un clic.</p>
-    <div class="header-meta">
-      <div class="meta-item"><span class="dot"></span> Responsable : May Kanaan</div>
-      <div class="meta-item"><span class="dot"></span> Mis à jour régulièrement</div>
-      <div class="meta-item"><span class="dot"></span> MS → CS</div>
-    </div>
-  </div>
-</header>
+<!-- TOPBAR -->
+<div class="topbar fade-up">
+  <span>Liban · Enseignement du Français</span>
+  <span class="or">ulf-may.github.io/ULF-Ressources</span>
+</div>
 
-<div class="filtres-bar">
-  <div class="filtres-inner" id="filtres">
-    <button class="filtre-btn actif" data-niveau="tous">Tous les niveaux</button>
-    <button class="filtre-btn" data-niveau="ms">MS</button>
-    <button class="filtre-btn" data-niveau="gs">GS</button>
-    <button class="filtre-btn" data-niveau="eb1">EB1</button>
-    <button class="filtre-btn" data-niveau="eb2">EB2</button>
-    <button class="filtre-btn" data-niveau="eb3">EB3</button>
-    <button class="filtre-btn" data-niveau="eb4">EB4</button>
-    <button class="filtre-btn" data-niveau="eb5">EB5</button>
-    <button class="filtre-btn" data-niveau="eb6">EB6</button>
-    <button class="filtre-btn" data-niveau="eb7">EB7</button>
-    <button class="filtre-btn" data-niveau="eb8">EB8</button>
-    <button class="filtre-btn" data-niveau="cs">CS</button>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow fade-up d1">
+        <div class="ligne"></div>
+        <span>Espace Pédagogique Numérique</span>
+      </div>
+      <h1 class="fade-up d2">ULF <em>Ressources</em><br>Français</h1>
+      <p class="hero-desc fade-up d3">
+        Activités interactives de français conçues par les enseignantes,
+        accessibles depuis n'importe quel appareil, pour tous les niveaux
+        de la Maternelle au Secondaire.
+      </p>
+      <div class="hero-pills fade-up d4">
+        <span class="pill pill-or">Maternelle → Secondaire</span>
+        <span class="pill pill-blanc">8 écoles</span>
+        <span class="pill pill-blanc">WhatsApp &amp; PDF</span>
+        <span class="pill pill-blanc">Sans installation</span>
+      </div>
+    </div>
+    <div class="hero-monogram fade-up d5"><span>ULF</span></div>
+  </div>
+  <div class="hero-gold-line"></div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar fade-up">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-act">1</div>
+      <div class="stat-label">Activité publiée</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Cycles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Écoles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Accès gratuit</div>
+    </div>
   </div>
 </div>
 
+<!-- FILTRES -->
+<div class="filtres-zone">
+  <div class="filtres-inner" id="filtres-cycles">
+    <button class="f-btn actif" data-cycle="tous">Tous les niveaux</button>
+    <button class="f-btn" data-cycle="maternelle">🌸 Maternelle</button>
+    <button class="f-btn" data-cycle="cycle1">🟢 Cycle 1</button>
+    <button class="f-btn" data-cycle="cycle2">🟣 Cycle 2</button>
+    <button class="f-btn" data-cycle="cycle3">🟠 Cycle 3</button>
+    <button class="f-btn" data-cycle="secondaire">🔴 Secondaire</button>
+  </div>
+  <!-- SOUS-NIVEAUX -->
+  <div class="sous-niveaux-bar" id="sous-niveaux-bar" style="display:none;">
+    <div class="filtres-inner" id="filtres-sous">
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
 <main>
 
-  <!-- ===== SECTION EXEMPLE ===== -->
-  <p class="section-titre">Activités disponibles</p>
+  <!-- Activités -->
+  <div class="section-label fade-up">
+    <div class="trait"></div>
+    <span>Activités disponibles</span>
+    <div class="trait-long"></div>
+  </div>
 
-  <div class="grille" id="grille-activites">
+  <div class="grille" id="grille">
 
-    <!-- CARTE EXEMPLE — À dupliquer pour chaque nouvelle activité -->
-    <div class="carte niveau-eb5" data-niveau="eb5">
-      <div class="carte-header"></div>
+    <!-- ══ CARTE — dupliquer pour chaque nouvelle activité ══ -->
+    <div class="carte cycle2 fade-up d1" data-cycle="cycle2" data-niveau="eb5">
+      <div class="carte-barre"></div>
       <div class="carte-body">
-        <div class="carte-badges">
-          <span class="badge badge-niveau">EB5</span>
-          <span class="badge badge-type">Compréhension</span>
+        <div class="carte-tags">
+          <span class="tag tag-niveau">EB5 — Cycle 2</span>
+          <span class="tag tag-type">Compréhension</span>
+          <span class="tag tag-type">Expression</span>
         </div>
         <h3>La Fête de Moumine</h3>
-        <p>Activités interactives autour du texte : compréhension globale, repérage lexical, production écrite.</p>
+        <p>QCM, vrai/faux, texte à trous et production écrite autour d'un récit de fête dans la vallée de Moumine.</p>
       </div>
       <div class="carte-footer">
-        <div class="carte-auteur">
-          <div class="auteur-avatar">MK</div>
+        <div class="auteur">
+          <div class="auteur-initiales">MK</div>
           May Kanaan
         </div>
         <a href="fete_moumine_EB5.html" class="btn-ouvrir">
           Ouvrir
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
-
-    <!-- ZONE VIDE — message quand on filtre et il n'y a rien -->
-    <!-- Les nouvelles cartes s'ajoutent ici -->
+    <!-- ══ FIN CARTE ══ -->
 
   </div>
 
-  <!-- MESSAGE QUAND FILTRE VIDE -->
-  <div class="zone-vide" id="msg-vide" style="display:none;">
-    <div class="icone">📂</div>
+  <div class="zone-vide" id="zone-vide">
+    <div class="ic">📂</div>
     <h3>Aucune activité pour ce niveau</h3>
-    <p>Ce niveau n'a pas encore d'activités publiées. Les enseignants peuvent envoyer leurs fichiers HTML à May Kanaan pour les ajouter.</p>
+    <p>Les enseignantes peuvent envoyer leurs fichiers HTML à May Kanaan pour publication.</p>
   </div>
 
-  <!-- GUIDE D'AJOUT -->
-  <p class="section-titre">Comment ajouter une activité</p>
+  <!-- Comment ça marche -->
+  <div class="section-label fade-up">
+    <div class="trait"></div>
+    <span>Comment ça marche</span>
+    <div class="trait-long"></div>
+  </div>
 
-  <div class="guide-box">
-    <h3>📤 Pour les enseignants — Publier une activité</h3>
-    <div class="guide-etape">
-      <div class="etape-num">1</div>
-      <div class="etape-texte">
-        <strong>Créer votre fichier HTML</strong>
-        <span>Avec l'aide de Claude ou autre outil, créez votre activité interactive au format .html</span>
+  <div class="section-how fade-up">
+    <h2>Pour les élèves — En 4 étapes simples</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+      <span style="font-size:11px;padding:4px 12px;border-radius:2px;background:#fce7f3;color:#9d174d;font-weight:600;">🌸 Maternelle — PS · MS · GS</span>
+      <span style="font-size:11px;padding:4px 12px;border-radius:2px;background:#d1fae5;color:#065f46;font-weight:600;">🟢 Cycle 1 — EB1 · EB2 · EB3</span>
+      <span style="font-size:11px;padding:4px 12px;border-radius:2px;background:#ede9fe;color:#4c1d95;font-weight:600;">🟣 Cycle 2 — EB4 · EB5 · EB6</span>
+      <span style="font-size:11px;padding:4px 12px;border-radius:2px;background:#fff7ed;color:#92400e;font-weight:600;">🟠 Cycle 3 — EB7 · EB8 · EB9</span>
+      <span style="font-size:11px;padding:4px 12px;border-radius:2px;background:#fee2e2;color:#991b1b;font-weight:600;">🔴 Secondaire — CS1 · CS2 · SV · SE</span>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h4>Recevoir le lien</h4>
+        <p>L'enseignante partage le lien par WhatsApp ou sur la plateforme Amal Schools</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h4>Se connecter</h4>
+        <p>L'élève entre son prénom, nom et choisit son école dans la liste déroulante</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h4>Faire les exercices</h4>
+        <p>Activités interactives avec corrections immédiates et score en temps réel</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <h4>Envoyer les réponses</h4>
+        <p>Par WhatsApp à l'enseignante, ou en téléchargeant un PDF personnel</p>
       </div>
     </div>
-    <div class="guide-etape">
-      <div class="etape-num">2</div>
-      <div class="etape-texte">
-        <strong>Envoyer à May Kanaan</strong>
-        <span>Transmettez votre fichier .html par WhatsApp, email ou Google Drive</span>
+  </div>
+
+  <!-- Écoles -->
+  <div class="section-label fade-up">
+    <div class="trait"></div>
+    <span>Écoles participantes</span>
+    <div class="trait-long"></div>
+  </div>
+
+  <div class="section-ecoles fade-up">
+    <h2>8 établissements</h2>
+    <p>Toutes les activités sont accessibles aux élèves de ces écoles</p>
+    <div class="ecoles-liste">
+      <span class="ecole-tag">Choumrane</span>
+      <span class="ecole-tag">Fahs</span>
+      <span class="ecole-tag">Karamé</span>
+      <span class="ecole-tag">Kassir</span>
+      <span class="ecole-tag">Libération</span>
+      <span class="ecole-tag">Saad</span>
+      <span class="ecole-tag">Sader</span>
+      <span class="ecole-tag">Yaacoub</span>
+    </div>
+  </div>
+
+  <!-- Responsable -->
+  <div class="section-label fade-up">
+    <div class="trait"></div>
+    <span>Responsable de la plateforme</span>
+    <div class="trait-long"></div>
+  </div>
+
+  <div class="section-responsable fade-up">
+    <div class="card-resp">
+      <div class="label">Coordination pédagogique</div>
+      <h3>May Kanaan</h3>
+      <p>Superviseure de français, responsable de la publication et de la gestion des ressources pédagogiques numériques de la Maternelle au Secondaire.</p>
+      <div class="detail">
+        <span><div class="dot"></div> CAPES · DELF Examinatrice-Correctrice</span>
+        <span><div class="dot"></div> 25 ans d'expérience en enseignement</span>
+        <span><div class="dot"></div> Maternelle → Secondaire</span>
       </div>
     </div>
-    <div class="guide-etape">
-      <div class="etape-num">3</div>
-      <div class="etape-texte">
-        <strong>Publication sur le site</strong>
-        <span>May dépose le fichier sur GitHub — il est en ligne en moins de 2 minutes</span>
-      </div>
-    </div>
-    <div class="guide-etape">
-      <div class="etape-num">4</div>
-      <div class="etape-texte">
-        <strong>Partager le lien aux élèves</strong>
-        <span>L'URL permanente est : <br><em>ulf-may.github.io/activites-francais/nom-du-fichier.html</em></span>
+    <div class="card-resp">
+      <div class="label">Pour les enseignantes</div>
+      <h3>Ajouter une activité</h3>
+      <p>Vous souhaitez publier une activité ? Créez votre fichier HTML avec Claude en suivant le guide pédagogique, puis transmettez-le à May Kanaan pour publication.</p>
+      <div class="detail">
+        <span><div class="dot"></div> Guide disponible sur demande</span>
+        <span><div class="dot"></div> Publication sous 24h</span>
+        <span><div class="dot"></div> Lien permanent fourni</span>
       </div>
     </div>
   </div>
 
 </main>
 
+<!-- FOOTER -->
 <footer>
-  Espace pédagogique numérique — Géré par <span>May Kanaan</span> · Hébergé sur GitHub Pages
+  <div class="logo-footer">ULF Ressources</div>
+  <div class="footer-ligne"></div>
+  <p>
+    Espace pédagogique numérique · Responsable : <span class="gold">May Kanaan</span><br>
+    ulf-may.github.io/ULF-Ressources · Liban
+  </p>
 </footer>
 
 <script>
-  const filtres = document.querySelectorAll('.filtre-btn');
-  const cartes = document.querySelectorAll('.carte');
-  const msgVide = document.getElementById('msg-vide');
+  // Données sous-niveaux
+  const sousNiveaux = {
+    maternelle:  ['Tous', 'PS', 'MS', 'GS'],
+    cycle1:      ['Tous', 'EB1', 'EB2', 'EB3'],
+    cycle2:      ['Tous', 'EB4', 'EB5', 'EB6'],
+    cycle3:      ['Tous', 'EB7', 'EB8', 'EB9'],
+    secondaire:  ['Tous', 'CS1', 'CS2', 'SV', 'SE'],
+  };
 
-  filtres.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filtres.forEach(b => b.classList.remove('actif'));
-      btn.classList.add('actif');
-      const niveau = btn.dataset.niveau;
-      let visible = 0;
-      cartes.forEach(carte => {
-        if (niveau === 'tous' || carte.dataset.niveau === niveau) {
-          carte.style.display = 'flex';
-          visible++;
-        } else {
-          carte.style.display = 'none';
-        }
+  let cycleActif = 'tous';
+  let sousNiveauActif = 'tous';
+
+  function filtrerCartes() {
+    let n = 0;
+    document.querySelectorAll('.carte').forEach(c => {
+      const cycle = c.dataset.cycle || '';
+      const sous  = (c.dataset.niveau || '').toLowerCase();
+      const okCycle = cycleActif === 'tous' || cycle === cycleActif;
+      const okSous  = sousNiveauActif === 'tous' || sous === sousNiveauActif.toLowerCase();
+      const ok = okCycle && okSous;
+      c.style.display = ok ? 'flex' : 'none';
+      if (ok) n++;
+    });
+    document.getElementById('zone-vide').style.display = n === 0 ? 'block' : 'none';
+  }
+
+  function afficherSousNiveaux(cycle) {
+    const bar = document.getElementById('sous-niveaux-bar');
+    const container = document.getElementById('filtres-sous');
+    if (cycle === 'tous') { bar.style.display = 'none'; return; }
+    const niveaux = sousNiveaux[cycle] || [];
+    container.innerHTML = niveaux.map((n, i) =>
+      `<button class="f-btn-sub${i===0?' actif':''}" data-sous="${n === 'Tous' ? 'tous' : n}">${n === 'Tous' ? 'Tous les sous-niveaux' : n}</button>`
+    ).join('');
+    container.querySelectorAll('.f-btn-sub').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('.f-btn-sub').forEach(b => b.classList.remove('actif'));
+        btn.classList.add('actif');
+        sousNiveauActif = btn.dataset.sous;
+        filtrerCartes();
       });
-      msgVide.style.display = visible === 0 ? 'block' : 'none';
+    });
+    bar.style.display = 'block';
+  }
+
+  // Filtres cycles
+  document.querySelectorAll('[data-cycle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-cycle]').forEach(b => b.classList.remove('actif'));
+      btn.classList.add('actif');
+      cycleActif = btn.dataset.cycle;
+      sousNiveauActif = 'tous';
+      afficherSousNiveaux(cycleActif);
+      filtrerCartes();
     });
   });
-</script>
 
+  // Compteur stat activités
+  const nb = document.querySelectorAll('.carte').length;
+  const el = document.getElementById('stat-act');
+  el.textContent = nb;
+  el.closest('.stat-item').querySelector('.stat-label').textContent =
+    nb <= 1 ? 'Activité publiée' : 'Activités publiées';
+</script>
 </body>
 </html>
