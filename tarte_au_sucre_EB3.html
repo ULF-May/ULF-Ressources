@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🥧 Tarte au Sucre — Activités EB3</title>
+<style>
+:root {
+  /* 🎨 Palette enfantine — Pâtisserie & Cuisine */
+  --cream:      #FFF9F2;   /* fond ivoire chaud       */
+  --vanilla:    #FFF4E0;   /* fond carte très clair   */
+  --strawb:     #E8445A;   /* fraise — couleur primaire */
+  --strawb-lt:  #FF8FA3;   /* fraise claire           */
+  --butter:     #F9C846;   /* jaune beurre — accents  */
+  --butter-lt:  #FFF3C2;   /* jaune très clair        */
+  --mint:       #4CAF82;   /* vert menthe — succès    */
+  --mint-lt:    #C8EDD9;   /* vert clair — consignes  */
+  --sky:        #5BA3F5;   /* bleu ciel — variété     */
+  --sky-lt:     #D6EAFF;   /* bleu très clair         */
+  --peach:      #FF7043;   /* orange pêche — boutons  */
+  --peach-lt:   #FFE0D0;   /* pêche clair             */
+  --choco:      #4A2C17;   /* chocolat foncé — texte  */
+  --choco-med:  #7B4D2E;   /* chocolat moyen          */
+  --choco-lt:   #C4956A;   /* chocolat clair          */
+  --ok:         #3CB371;   /* vert succès             */
+  --err:        #D32F2F;   /* rouge erreur            */
+  --text:       #3D2012;   /* texte principal         */
+  --sh:         rgba(74,44,23,0.12);
+  --rad:        16px;
+  /* alias pour compatibilité */
+  --brown:      #4A2C17;
+  --brown-med:  #7B4D2E;
+  --brown-light:#C4956A;
+  --orange:     #F9C846;
+  --terra:      #E8445A;
+  --terra-light:#FF8FA3;
+  --sage:       #4CAF82;
+  --sage-light: #C8EDD9;
+  --yellow:     #FFF3C2;
+  --yellow-b:   #F9C846;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  font-family: 'Nunito', 'Comic Sans MS', Georgia, serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height:100vh;
+  font-size:17px;
+  line-height:1.7;
+  background-image: radial-gradient(circle at 20% 10%, #FFE4EC 0%, transparent 40%),
+                    radial-gradient(circle at 80% 80%, #FFF3C2 0%, transparent 40%);
+  background-attachment: fixed;
+}
+/* ─── UTILS ─── */
+.hidden{display:none!important;}
+.flex{display:flex;}
+.col{flex-direction:column;}
+.center{align-items:center;justify-content:center;}
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--brown-light);border-radius:3px;}
+
+/* ═══════════════════════════
+   HEADER
+══════════════════════════════*/
+#hdr{
+  background: linear-gradient(135deg, var(--strawb) 0%, #C0392B 100%);
+  color:white;
+  padding:10px 16px 8px;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 3px 12px rgba(232,68,90,0.3);
+}
+#hdr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+#hdr-title{font-size:1rem;font-weight:bold;letter-spacing:.3px;}
+#score-badge{
+  background:var(--butter);color:var(--choco);
+  border-radius:20px;padding:3px 12px;
+  font-weight:bold;font-size:.95rem;
+  font-family:'Nunito','Trebuchet MS',sans-serif;
+}
+#pb-wrap{background:rgba(255,255,255,.3);border-radius:6px;height:9px;overflow:hidden;}
+#pb{height:100%;background:var(--butter);border-radius:6px;transition:width .5s ease;width:0%;
+    box-shadow:0 0 6px rgba(249,200,70,.6);}
+
+/* ═══════════════════════════
+   SCREENS WRAPPER
+══════════════════════════════*/
+.screen{display:none;}
+.screen.on{display:block;}
+
+/* ═══════════════════════════
+   LOGIN
+══════════════════════════════*/
+#login-screen{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;padding:24px;
+}
+.login-card{
+  background:white;border-radius:28px;padding:36px 28px;
+  max-width:420px;width:100%;
+  box-shadow:0 10px 40px rgba(232,68,90,.18);
+  border:3px solid var(--strawb-lt);
+  position:relative;overflow:hidden;
+}
+.login-card::before{
+  content:'🍓🧁🥚🧈🍰';
+  position:absolute;top:10px;left:0;right:0;
+  text-align:center;font-size:1.3rem;opacity:.12;
+  letter-spacing:4px;pointer-events:none;
+}
+.login-hero{text-align:center;margin-bottom:24px;}
+.school-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--strawb),#C0392B);
+  color:white;
+  border-radius:20px;padding:5px 16px;
+  font-size:.85rem;font-weight:bold;
+  font-family:'Nunito','Trebuchet MS',sans-serif;
+  letter-spacing:.4px;margin-bottom:14px;
+  box-shadow:0 3px 8px rgba(232,68,90,.3);
+}
+.login-hero .emoji{font-size:4.5rem;display:block;margin-bottom:6px;
+  filter:drop-shadow(0 4px 8px rgba(232,68,90,.2));}
+.login-hero h1{font-size:1.7rem;color:var(--strawb);margin-bottom:4px;
+  font-family:'Nunito','Trebuchet MS',sans-serif;font-weight:800;}
+.login-hero p{color:var(--choco-med);font-size:.95rem;}
+.lf{margin-bottom:16px;}
+.lf label{display:block;font-weight:800;color:var(--choco);margin-bottom:6px;
+  font-size:1rem;font-family:'Nunito','Trebuchet MS',sans-serif;}
+.lf input, .lf select{
+  width:100%;padding:13px 14px;
+  border:2px solid #f0d9d9;border-radius:var(--rad);
+  font-size:1.05rem;font-family:'Nunito',Georgia,serif;
+  background:var(--cream);transition:border .2s;color:var(--text);
+}
+.lf input:focus, .lf select:focus{border-color:var(--strawb);outline:none;background:white;}
+.lf select{cursor:pointer;}
+#teacher-link-wrap{text-align:center;margin-top:16px;}
+#teacher-link{
+  color:var(--choco-med);font-size:.85rem;cursor:pointer;
+  text-decoration:underline;font-family:'Nunito','Trebuchet MS',sans-serif;
+}
+
+/* ═══════════════════════════
+   MAIN APP (steps)
+══════════════════════════════*/
+#app-screen{padding-bottom:80px;}
+#step-area{max-width:720px;margin:0 auto;padding:0 14px;}
+
+/* Step header bar */
+.step-hdr{
+  background:linear-gradient(135deg, var(--strawb) 0%, #C0392B 100%);
+  color:white;
+  border-radius:0 0 22px 22px;
+  padding:14px 18px 20px;margin-bottom:16px;
+  box-shadow:0 4px 14px rgba(232,68,90,.25);
+}
+.step-badge{
+  display:inline-block;background:var(--butter);color:var(--choco);
+  border-radius:20px;padding:2px 12px;font-size:.82rem;font-weight:800;
+  margin-bottom:6px;font-family:'Nunito','Trebuchet MS',sans-serif;
+}
+.step-hdr h2{font-size:1.25rem;line-height:1.35;font-family:'Nunito','Trebuchet MS',sans-serif;font-weight:800;}
+
+/* Cards */
+.card{
+  background:white;border-radius:var(--rad);
+  padding:18px;margin-bottom:16px;
+  box-shadow:0 3px 14px var(--sh);
+  border:2px solid #f5e8e8;
+}
+.act-head{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:12px;
+}
+.act-num{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--strawb);color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.95rem;flex-shrink:0;
+  font-family:'Nunito','Trebuchet MS',sans-serif;
+  box-shadow:0 2px 6px rgba(232,68,90,.35);
+}
+.act-label{font-weight:800;font-size:1.05rem;color:var(--choco);
+  font-family:'Nunito','Trebuchet MS',sans-serif;}
+.consigne{
+  background:var(--mint-lt);border-left:5px solid var(--mint);
+  padding:9px 13px;border-radius:0 10px 10px 0;
+  margin-bottom:14px;font-size:1rem;
+}
+
+/* ─── OPTION BUTTONS (QCM) ─── */
+.opts{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.opt-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 15px;
+  background:var(--cream);border:2.5px solid #f0dada;
+  border-radius:14px;cursor:pointer;
+  font-size:1rem;font-family:'Nunito',Georgia,serif;
+  text-align:left;width:100%;
+  transition:border .15s,background .15s,transform .1s;
+  -webkit-tap-highlight-color:transparent;
+}
+.opt-btn:hover{border-color:var(--strawb-lt);background:#fff0f2;transform:translateX(3px);}
+.opt-btn.sel{border-color:var(--strawb);background:#ffe8ec;}
+.opt-btn.correct{border-color:var(--ok);background:#e6f7ed;pointer-events:none;}
+.opt-btn.wrong{border-color:var(--err);background:#ffebee;pointer-events:none;}
+.opt-btn.disabled{pointer-events:none;opacity:.75;}
+
+/* ─── FEEDBACK ─── */
+.fb{
+  padding:9px 13px;border-radius:10px;
+  margin-top:8px;font-weight:bold;font-size:.95rem;
+  font-family:'Trebuchet MS',sans-serif;
+}
+.fb.ok{background:#e8f5e9;color:var(--ok);border:2px solid var(--ok);}
+.fb.no{background:#ffebee;color:var(--err);border:2px solid var(--err);}
+
+/* ─── CHECKBOXES ─── */
+.ck-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.ck-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 14px;background:var(--cream);
+  border:2px solid #e5ddd6;border-radius:10px;
+  cursor:pointer;font-size:1rem;
+  transition:border .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.ck-item:hover{border-color:var(--orange);}
+.ck-item input[type="checkbox"]{
+  width:22px;height:22px;accent-color:var(--terra);
+  cursor:pointer;flex-shrink:0;
+}
+.ck-item.ck-ok{border-color:var(--ok);background:#e8f5e9;}
+.ck-item.ck-err{border-color:var(--err);background:#ffebee;}
+
+/* ─── VRAI/FAUX ─── */
+.vf-item{
+  padding:12px 14px;background:var(--cream);
+  border:2px solid #e5ddd6;border-radius:12px;
+  margin-bottom:10px;
+}
+.vf-q{font-weight:bold;margin-bottom:8px;font-size:1rem;}
+.vf-btns{display:flex;gap:8px;}
+.vf-btn{
+  flex:1;padding:10px 6px;border:2px solid #e5ddd6;
+  border-radius:10px;font-size:1rem;font-weight:bold;
+  font-family:Georgia,serif;background:white;cursor:pointer;
+  transition:all .15s;text-align:center;
+  -webkit-tap-highlight-color:transparent;
+}
+.vf-btn.v-sel{background:#e3f2fd;border-color:#2196f3;}
+.vf-btn.f-sel{background:#ffebee;border-color:#f44336;}
+.vf-btn.correct{background:#e8f5e9;border-color:var(--ok);color:var(--ok);}
+.vf-btn.wrong{background:#ffebee;border-color:var(--err);color:var(--err);}
+.vf-btn.disabled{pointer-events:none;}
+
+/* ─── ORDER ─── */
+.ord-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.ord-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;background:var(--cream);
+  border:2px solid #e5ddd6;border-radius:12px;
+}
+.ord-sel{
+  width:56px;height:42px;border:2px solid #e5ddd6;
+  border-radius:8px;text-align:center;font-size:1.1rem;
+  font-weight:bold;font-family:Georgia,serif;color:var(--brown);
+  background:white;-webkit-appearance:none;appearance:none;
+  text-align-last:center;
+}
+.ord-sel:focus{border-color:var(--terra);outline:none;}
+.ord-label{font-size:1rem;}
+
+/* ─── TABLE ─── */
+.ingr-table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:.97rem;}
+.ingr-table th{
+  background:var(--brown);color:white;
+  padding:9px 10px;text-align:left;
+  font-family:'Trebuchet MS',sans-serif;
+}
+.ingr-table td{
+  padding:7px 9px;border:1px solid #e5ddd6;background:white;
+}
+.ingr-table tr:nth-child(even) td{background:var(--cream);}
+.ingr-table .de-cell{
+  text-align:center;font-style:italic;
+  color:var(--brown-med);font-weight:bold;
+}
+.ingr-table select{
+  width:100%;padding:6px 8px;
+  border:2px solid #e5ddd6;border-radius:8px;
+  font-size:.95rem;font-family:Georgia,serif;
+  background:white;color:var(--text);
+}
+.ingr-table select:focus{border-color:var(--terra);outline:none;}
+.ingr-table .prefill{color:var(--brown);font-weight:bold;}
+
+/* ─── ASSOCIATION ─── */
+.assoc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.assoc-box{
+  background:var(--cream);border:2px solid #e5ddd6;
+  border-radius:12px;padding:12px;
+}
+.assoc-box h4{
+  font-size:.85rem;color:var(--brown-med);
+  font-family:'Trebuchet MS',sans-serif;margin-bottom:6px;
+}
+.assoc-words{
+  font-size:.97rem;font-weight:bold;color:var(--brown);
+  margin-bottom:10px;line-height:1.7;
+}
+.assoc-sel{
+  width:100%;padding:7px 9px;border:2px solid #e5ddd6;
+  border-radius:8px;font-size:.95rem;font-family:Georgia,serif;
+  background:white;
+}
+.assoc-sel:focus{border-color:var(--terra);outline:none;}
+
+/* ─── WORD BANK ─── */
+.word-bank{
+  background:var(--yellow);border:2px solid var(--yellow-b);
+  border-radius:12px;padding:12px 14px;margin-bottom:14px;
+}
+.word-bank h4{
+  color:var(--brown);margin-bottom:8px;
+  font-family:'Trebuchet MS',sans-serif;font-size:.95rem;
+}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{
+  background:white;border:2px solid var(--orange);
+  border-radius:20px;padding:5px 13px;
+  cursor:pointer;font-size:.93rem;font-family:Georgia,serif;
+  transition:all .15s;user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.chip:hover{background:var(--orange);color:white;}
+
+/* ─── WRITING FIELDS ─── */
+.wf-group{margin-bottom:14px;}
+.wf-group label{
+  display:block;font-weight:bold;color:var(--brown);
+  margin-bottom:6px;font-size:1rem;
+  font-family:'Trebuchet MS',sans-serif;
+}
+.wf-group input,
+.wf-group textarea{
+  width:100%;padding:11px 13px;
+  border:2px solid #e5ddd6;border-radius:10px;
+  font-size:1rem;font-family:Georgia,serif;
+  background:white;color:var(--text);
+  resize:vertical;
+}
+.wf-group input:focus,
+.wf-group textarea:focus{border-color:var(--terra);outline:none;}
+.wf-group textarea{min-height:80px;}
+
+/* ─── RULES BOX ─── */
+.rules-box{
+  background:var(--yellow);border:2px solid var(--yellow-b);
+  border-radius:12px;padding:12px 16px;margin-bottom:14px;
+}
+.rules-box p{font-weight:bold;color:var(--brown);margin-bottom:6px;font-family:'Trebuchet MS',sans-serif;}
+.rules-box ul{list-style:disc;padding-left:18px;}
+.rules-box li{margin-bottom:3px;font-size:.95rem;}
+
+/* ═══════════════════════════
+   BOTTOM NAV
+══════════════════════════════*/
+#nav-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:white;padding:10px 16px;
+  border-top:3px solid #ffe0e0;
+  display:flex;justify-content:space-between;align-items:center;
+  box-shadow:0 -3px 14px rgba(232,68,90,.1);
+}
+.nav-step-info{
+  font-size:.88rem;color:var(--choco-med);
+  font-family:'Nunito','Trebuchet MS',sans-serif;text-align:center;font-weight:700;
+}
+
+/* ─── BUTTONS ─── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:11px 22px;border:none;border-radius:50px;
+  font-size:1rem;font-family:'Nunito','Trebuchet MS',sans-serif;
+  cursor:pointer;font-weight:800;min-height:48px;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;
+  letter-spacing:.3px;
+}
+.btn-primary{background:linear-gradient(135deg,var(--strawb),#C0392B);color:white;
+  box-shadow:0 4px 12px rgba(232,68,90,.35);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(232,68,90,.4);}
+.btn-next{background:linear-gradient(135deg,var(--peach),#E64A19);color:white;
+  box-shadow:0 4px 10px rgba(255,112,67,.35);}
+.btn-next:hover{transform:translateY(-2px);}
+.btn-back{background:#f5e8e8;color:var(--choco);}
+.btn-back:hover{background:#f0d5d5;}
+.btn-check{background:linear-gradient(135deg,var(--mint),#388E5C);color:white;
+  box-shadow:0 4px 10px rgba(76,175,130,.3);}
+.btn-check:hover{transform:translateY(-1px);}
+.btn-send{background:linear-gradient(135deg,var(--strawb),#C0392B);color:white;
+  width:100%;margin-top:12px;box-shadow:0 4px 12px rgba(232,68,90,.3);}
+.btn-send:hover{transform:translateY(-1px);}
+.btn-pdf{background:white;color:var(--choco);border:2.5px solid var(--choco-lt);
+  width:100%;margin-top:10px;}
+.btn-pdf:hover{background:var(--cream);}
+.btn-big{font-size:1.15rem;padding:15px 30px;}
+
+/* ═══════════════════════════
+   ANNOTATED TEXT SUPPORT
+══════════════════════════════*/
+.text-annot-wrap{
+  display:grid;grid-template-columns:1fr 180px;
+  gap:14px;align-items:start;
+}
+@media(max-width:540px){
+  .text-annot-wrap{grid-template-columns:1fr;}
+}
+.recipe-text{
+  background:var(--vanilla);
+  border:2.5px solid #f5dada;border-radius:14px;
+  padding:16px 18px;font-size:.97rem;line-height:1.85;
+}
+.recipe-text .r-title{
+  text-align:center;font-size:1.25rem;font-weight:900;
+  color:var(--strawb);letter-spacing:2px;margin-bottom:10px;
+  font-family:'Nunito','Trebuchet MS',sans-serif;
+  text-transform:uppercase;
+  border-bottom:3px dotted var(--strawb-lt);padding-bottom:8px;
+}
+.recipe-text .r-section{
+  font-weight:900;color:var(--mint);margin:12px 0 5px;
+  font-family:'Nunito','Trebuchet MS',sans-serif;font-size:.95rem;
+  background:var(--mint-lt);display:inline-block;
+  padding:2px 10px;border-radius:20px;
+}
+.recipe-text .r-item{
+  margin:2px 0 2px 12px;color:var(--choco);
+  display:flex;align-items:flex-start;gap:6px;
+}
+.recipe-text .r-bullet{color:var(--strawb-lt);font-weight:900;flex-shrink:0;}
+.recipe-text .r-steps-title{
+  font-weight:900;color:var(--peach);margin:12px 0 5px;
+  font-family:'Nunito','Trebuchet MS',sans-serif;font-size:.95rem;
+  background:var(--peach-lt);display:inline-block;
+  padding:2px 10px;border-radius:20px;
+}
+.recipe-text .r-step{
+  margin:4px 0;
+  display:grid;grid-template-columns:26px 1fr;gap:6px;align-items:start;
+}
+.recipe-text .r-step-num{
+  width:24px;height:24px;background:var(--peach);color:white;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:900;flex-shrink:0;
+  font-family:'Nunito',sans-serif;
+}
+.recipe-text .r-verb{
+  font-weight:900;color:var(--strawb);
+}
+
+/* Annotation bubbles */
+.annot-col{
+  display:flex;flex-direction:column;gap:10px;
+  padding-top:0;
+}
+.annot-bubble{
+  background:white;border-radius:14px;padding:9px 11px;
+  border:2.5px solid var(--butter);
+  font-size:.82rem;line-height:1.45;color:var(--choco);
+  font-family:'Nunito','Trebuchet MS',sans-serif;
+  position:relative;
+  box-shadow:0 2px 8px rgba(249,200,70,.18);
+}
+.annot-bubble::before{
+  content:'';position:absolute;left:-13px;top:13px;
+  border:6px solid transparent;border-right-color:var(--butter);
+}
+.annot-bubble.a-title{border-color:var(--strawb-lt);background:#fff5f7;}
+.annot-bubble.a-title::before{border-right-color:var(--strawb-lt);}
+.annot-bubble.a-ingr{border-color:var(--mint);background:#f0faf5;}
+.annot-bubble.a-ingr::before{border-right-color:var(--mint);}
+.annot-bubble.a-ust{border-color:var(--sky);background:#f0f7ff;}
+.annot-bubble.a-ust::before{border-right-color:var(--sky);}
+.annot-bubble.a-steps{border-color:var(--peach);background:#fff5f0;}
+.annot-bubble.a-steps::before{border-right-color:var(--peach);}
+.annot-bubble.a-verb{border-color:var(--butter);background:var(--butter-lt);}
+.annot-bubble .annot-icon{font-size:1.1rem;display:block;margin-bottom:3px;}
+.annot-bubble strong{font-weight:900;display:block;margin-bottom:2px;}
+
+@media(max-width:540px){
+  .annot-col{flex-direction:row;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .annot-bubble{flex:1;min-width:140px;}
+  .annot-bubble::before{display:none;}
+}
+
+/* ═══════════════════════════
+   FINAL SCREEN
+══════════════════════════════*/
+#final-screen{
+  max-width:520px;margin:0 auto;padding:24px;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.final-card{
+  background:white;border-radius:28px;
+  padding:36px 24px;width:100%;
+  box-shadow:0 10px 40px rgba(232,68,90,.15);
+  text-align:center;
+  border:3px solid #ffe0e0;
+}
+.final-school{
+  background:linear-gradient(135deg,var(--strawb),#C0392B);color:white;
+  border-radius:20px;padding:4px 14px;
+  font-size:.82rem;font-weight:800;
+  font-family:'Nunito','Trebuchet MS',sans-serif;
+  display:inline-block;margin-bottom:12px;
+}
+.final-card h2{font-size:1.6rem;color:var(--strawb);margin-bottom:12px;
+  font-family:'Nunito','Trebuchet MS',sans-serif;font-weight:900;}
+.score-big{font-size:3.8rem;font-weight:900;color:var(--strawb);line-height:1;
+  font-family:'Nunito',sans-serif;}
+.score-denom{font-size:1.4rem;color:var(--choco-med);}
+.stars{font-size:2.2rem;margin:10px 0;}
+.final-msg{font-size:1.1rem;margin:12px 0;color:var(--choco-med);font-family:'Nunito',sans-serif;font-weight:700;}
+.send-status{
+  padding:10px;border-radius:12px;margin-top:8px;
+  font-size:.95rem;font-family:'Nunito','Trebuchet MS',sans-serif;font-weight:700;
+}
+.send-status.ok{background:#e6f7ed;color:var(--ok);}
+.send-status.err{background:#ffebee;color:var(--err);}
+
+/* ═══════════════════════════
+   TEACHER
+══════════════════════════════*/
+#teacher-login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;padding:24px;
+}
+.teacher-login-card{
+  background:white;border-radius:22px;padding:32px 26px;
+  max-width:380px;width:100%;
+  box-shadow:0 8px 28px rgba(232,68,90,.15);text-align:center;
+  border:3px solid #ffe0e0;
+}
+.teacher-login-card h2{color:var(--strawb);margin-bottom:6px;
+  font-family:'Nunito','Trebuchet MS',sans-serif;font-weight:900;}
+.teacher-login-card p{color:var(--choco-med);font-size:.9rem;margin-bottom:20px;}
+#teacher-screen{max-width:720px;margin:0 auto;padding:20px 14px 80px;}
+.teacher-hdr{
+  background:linear-gradient(135deg,var(--strawb),#C0392B);color:white;
+  border-radius:var(--rad);padding:18px 20px;margin-bottom:20px;
+}
+.teacher-hdr h2{font-size:1.3rem;font-family:'Nunito',sans-serif;font-weight:900;}
+.teacher-hdr p{font-size:.88rem;opacity:.85;margin-top:4px;}
+.student-row{
+  background:white;border:2px solid #ffe0e0;
+  border-radius:var(--rad);padding:14px 16px;margin-bottom:10px;
+}
+.student-name{font-weight:800;font-size:1.05rem;color:var(--choco);font-family:'Nunito',sans-serif;}
+.student-score{
+  display:inline-block;background:var(--strawb);color:white;
+  border-radius:10px;padding:2px 10px;font-size:.9rem;
+  margin:4px 0;font-family:'Nunito','Trebuchet MS',sans-serif;font-weight:700;
+}
+.student-prod{
+  margin-top:8px;background:var(--cream);
+  border-radius:8px;padding:10px;font-size:.9rem;
+}
+.student-prod strong{color:var(--choco-med);}
+.no-data{text-align:center;padding:40px;color:var(--choco-med);font-style:italic;}
+
+/* ═══════════════════════════
+   PRINT / PDF STYLES
+══════════════════════════════*/
+@media print{
+  body *{visibility:hidden;}
+  #pdf-zone, #pdf-zone *{visibility:visible;}
+  #pdf-zone{
+    position:absolute;top:0;left:0;width:100%;
+    font-family:Georgia,serif;color:#2E1A0E;
+  }
+  .pdf-school{
+    text-align:center;font-size:13pt;font-weight:bold;
+    color:#5C3317;margin-bottom:4px;
+  }
+  .pdf-title{
+    text-align:center;font-size:16pt;font-weight:bold;
+    margin-bottom:2px;
+  }
+  .pdf-sub{text-align:center;font-size:10pt;color:#888;margin-bottom:16px;}
+  .pdf-sep{border:none;border-top:2px solid #C4956A;margin:14px 0;}
+  .pdf-student{font-size:12pt;margin-bottom:6px;}
+  .pdf-score-line{
+    font-size:14pt;font-weight:bold;color:#C95B2A;margin-bottom:10px;
+  }
+  .pdf-section-title{
+    font-size:11pt;font-weight:bold;color:#5C3317;
+    border-left:4px solid #C95B2A;padding-left:8px;
+    margin:10px 0 4px;
+  }
+  .pdf-content{
+    font-size:10.5pt;background:#FFF8EE;
+    padding:8px 12px;border-radius:6px;
+    white-space:pre-wrap;line-height:1.6;
+  }
+  .pdf-results-title{
+    font-size:12pt;font-weight:bold;margin:14px 0 8px;
+    border-bottom:1px solid #C4956A;padding-bottom:4px;
+  }
+  .pdf-act{font-size:10pt;margin-bottom:3px;padding:4px 0;}
+  .pdf-act span{font-weight:bold;}
+  .pdf-ok{color:#3D9B47;}
+  .pdf-no{color:#D32F2F;}
+  .pdf-footer{
+    margin-top:24px;text-align:center;
+    font-size:9pt;color:#999;border-top:1px solid #eee;padding-top:8px;
+  }
+}
+.cf{
+  position:fixed;top:-10px;border-radius:2px;
+  animation:fall linear forwards;pointer-events:none;z-index:9999;
+}
+@keyframes fall{
+  to{transform:translateY(105vh) rotate(720deg);}
+}
+
+/* ═══════════════════════════
+   RESPONSIVE
+══════════════════════════════*/
+@media(max-width:460px){
+  .assoc-wrap{grid-template-columns:1fr;}
+  .btn{padding:11px 16px;font-size:.95rem;}
+  .ingr-table th,.ingr-table td{padding:6px 7px;font-size:.9rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+  SCREEN 0 — LOGIN
+═════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-hero">
+      <div class="school-badge">🏫 Institutions Éducatives Amal</div>
+      <span class="emoji">🥧</span>
+      <h1>Tarte au Sucre</h1>
+      <p>Activités de lecture — EB3</p>
+    </div>
+    <div class="lf">
+      <label for="inp-prenom">👤 Mon prénom</label>
+      <input type="text" id="inp-prenom" placeholder="ex : Lina" autocomplete="given-name">
+    </div>
+    <div class="lf">
+      <label for="inp-nom">👤 Mon nom</label>
+      <input type="text" id="inp-nom" placeholder="ex : Khoury" autocomplete="family-name">
+    </div>
+    <div class="lf">
+      <label for="inp-ecole">🏫 Mon école</label>
+      <select id="inp-ecole">
+        <option value="">— Choisis ton école —</option>
+        <option>Choumrane</option>
+        <option>Fahs</option>
+        <option>Karamé</option>
+        <option>Kassir</option>
+        <option>Libération</option>
+        <option>Saad</option>
+        <option>Sader</option>
+        <option>Yaacoub</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-big" style="width:100%;margin-top:8px;" onclick="startApp()">
+      🚀 Commencer les activités
+    </button>
+    <div id="login-err" class="fb no hidden">⚠️ Remplis tous les champs !</div>
+  </div>
+  <div id="teacher-link-wrap" style="margin-top:20px;">
+    <span id="teacher-link" onclick="showTeacherLogin()">🔐 Tableau de bord enseignante</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  HEADER (fixed, shown during app)
+═════════════════════════════════════════ -->
+<div id="hdr" class="hidden">
+  <div id="hdr-top">
+    <span id="hdr-title">🥧 Tarte au Sucre</span>
+    <span id="score-badge">⭐ 0 / 20</span>
+  </div>
+  <div id="pb-wrap"><div id="pb"></div></div>
+</div>
+
+<!-- ════════════════════════════════════════
+  APP SCREEN — all steps
+═════════════════════════════════════════ -->
+<div id="app-screen" class="screen">
+<div id="step-area">
+
+  <!-- ══ ÉTAPE 1 ══ -->
+  <section id="step-1" class="hidden">
+    <div class="step-hdr">
+      <span class="step-badge">Étape 1 / 6</span>
+      <h2>🍽️ Avant de lire le texte</h2>
+    </div>
+
+    <!-- TEXTE SUPPORT ANNOTÉ -->
+    <div class="card">
+      <div class="act-head">
+        <div class="act-num" style="background:var(--sky);">📖</div>
+        <div class="act-label">Le texte support — Lis bien la recette !</div>
+      </div>
+      <div class="text-annot-wrap">
+        <!-- Colonne texte -->
+        <div class="recipe-text">
+          <div class="r-title">🥧 Tarte au Sucre</div>
+
+          <div class="r-section">🥚 Ingrédients</div>
+          <div class="r-item"><span class="r-bullet">•</span><span>3 verres de farine</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 verre de sucre</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 œuf</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 petit pot de crème fraîche</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>la moitié d'un paquet de beurre (250 g)</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1/2 sachet de levure</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>sel</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>des granulés sucrés</span></div>
+
+          <div class="r-section">🥄 Ustensiles</div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 saladier</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 casserole</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 moule à tarte</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 cuillère à soupe</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 cuillère en bois</span></div>
+          <div class="r-item"><span class="r-bullet">•</span><span>1 pinceau</span></div>
+
+          <div class="r-steps-title">👩‍🍳 Préparation</div>
+          <div class="r-step"><div class="r-step-num">1</div><div><span class="r-verb">Mélange</span> la farine et le beurre ramolli.</div></div>
+          <div class="r-step"><div class="r-step-num">2</div><div><span class="r-verb">Ajoute</span> la moitié du verre de sucre, l'œuf et la levure.</div></div>
+          <div class="r-step"><div class="r-step-num">3</div><div><span class="r-verb">Mets</span> une pincée de sel et 3 cuillerées d'eau.</div></div>
+          <div class="r-step"><div class="r-step-num">4</div><div><span class="r-verb">Pétris</span> et <span class="r-verb">roule</span> la pâte en boule.</div></div>
+          <div class="r-step"><div class="r-step-num">5</div><div><span class="r-verb">Laisse</span> reposer 30 min.</div></div>
+          <div class="r-step"><div class="r-step-num">6</div><div><span class="r-verb">Beurre</span> le moule, <span class="r-verb">saupoudre</span> de farine.</div></div>
+          <div class="r-step"><div class="r-step-num">7</div><div><span class="r-verb">Étale</span> la pâte dans le moule et sur les rebords.</div></div>
+          <div class="r-step"><div class="r-step-num">8</div><div><span class="r-verb">Fais fondre</span> le reste du sucre dans 1 ou 2 cuillerées d'eau.</div></div>
+          <div class="r-step"><div class="r-step-num">9</div><div><span class="r-verb">Ajoute</span> 3 cuillerées de crème fraîche.</div></div>
+          <div class="r-step"><div class="r-step-num">10</div><div><span class="r-verb">Remue</span> rapidement. Le liquide ne doit pas bouillir.</div></div>
+          <div class="r-step"><div class="r-step-num">11</div><div><span class="r-verb">Verse</span> le mélange sur la pâte.</div></div>
+          <div class="r-step"><div class="r-step-num">12</div><div><span class="r-verb">Fais cuire</span> 36 min au four à th 6.</div></div>
+          <div class="r-step"><div class="r-step-num">13</div><div>La tarte se mange complètement refroidie. <span class="r-verb">Décore</span> avec des granulés sucrés.</div></div>
+        </div>
+
+        <!-- Colonne annotations -->
+        <div class="annot-col">
+          <div class="annot-bubble a-title">
+            <span class="annot-icon">🏷️</span>
+            <strong>Le TITRE</strong>
+            Il dit quel plat on va préparer !
+          </div>
+          <div class="annot-bubble a-ingr">
+            <span class="annot-icon">🛒</span>
+            <strong>Les INGRÉDIENTS</strong>
+            Ce dont on a besoin pour cuisiner.
+          </div>
+          <div class="annot-bubble a-ust">
+            <span class="annot-icon">🥄</span>
+            <strong>Les USTENSILES</strong>
+            Les outils de la cuisine.
+          </div>
+          <div class="annot-bubble a-steps">
+            <span class="annot-icon">🔢</span>
+            <strong>Les ÉTAPES</strong>
+            Les actions dans l'ordre, numérotées !
+          </div>
+          <div class="annot-bubble a-verb">
+            <span class="annot-icon">💬</span>
+            <strong>Les VERBES</strong>
+            En rouge = verbes à l'<em>impératif</em> : Mélange ! Verse ! Fais cuire !
+          </div>
+        </div>
+      </div>
+    </div><!-- end card texte annoté -->
+
+    <!-- Activité 1 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">1</div><div class="act-label">QCM — D'après le titre et les dessins…</div></div>
+      <div class="consigne">D'après le titre et les illustrations, que vas-tu découvrir dans ce texte ?</div>
+      <ul class="opts" id="a1-opts">
+        <li><button class="opt-btn" onclick="checkQCM(1,'a','wrong')">🧒 L'histoire de deux enfants qui font une tarte</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(1,'b','correct')">👨‍🍳 Comment faire une tarte au sucre</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(1,'c','wrong')">🎂 Une recette de gâteau d'anniversaire</button></li>
+      </ul>
+      <div id="a1-fb" class="fb hidden"></div>
+    </div>
+
+    <!-- Activité 2 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">2</div><div class="act-label">QCM — Le genre du texte</div></div>
+      <div class="consigne">Comment appelle-t-on ce genre de texte ?</div>
+      <ul class="opts" id="a2-opts">
+        <li><button class="opt-btn" onclick="checkQCM(2,'a','wrong')">📖 Un conte</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(2,'b','correct')">🍳 Une recette</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(2,'c','wrong')">📰 Un article de journal</button></li>
+      </ul>
+      <div id="a2-fb" class="fb hidden"></div>
+    </div>
+  </section>
+
+  <!-- ══ ÉTAPE 2 ══ -->
+  <section id="step-2" class="hidden">
+    <div class="step-hdr">
+      <span class="step-badge">Étape 2 / 6</span>
+      <h2>📚 Les mots de la cuisine</h2>
+    </div>
+
+    <!-- Activité 3 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">3</div><div class="act-label">Association — Les étiquettes</div></div>
+      <div class="consigne">Pour chaque liste, choisis le mot-étiquette qui convient.<br>
+        <em style="font-size:.88rem;">Mots-étiquettes : cuisine – ingrédient – recette – ustensile</em>
+      </div>
+      <div class="assoc-wrap">
+        <div class="assoc-box">
+          <h4>Liste A :</h4>
+          <div class="assoc-words">farine – sucre – œuf – beurre – sel</div>
+          <select class="assoc-sel" id="a3-1">
+            <option value="">-- Choisis --</option>
+            <option value="cuisine">cuisine</option>
+            <option value="ingrédient">ingrédient</option>
+            <option value="recette">recette</option>
+            <option value="ustensile">ustensile</option>
+          </select>
+        </div>
+        <div class="assoc-box">
+          <h4>Liste B :</h4>
+          <div class="assoc-words">saladier – casserole – moule – cuillère</div>
+          <select class="assoc-sel" id="a3-2">
+            <option value="">-- Choisis --</option>
+            <option value="cuisine">cuisine</option>
+            <option value="ingrédient">ingrédient</option>
+            <option value="recette">recette</option>
+            <option value="ustensile">ustensile</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-check" onclick="checkA3()">✔ Vérifier</button>
+      <div id="a3-fb" class="fb hidden"></div>
+    </div>
+
+    <!-- Activité 4 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">4</div><div class="act-label">QCM — Qu'est-ce qu'une cuillerée ?</div></div>
+      <ul class="opts" id="a4-opts">
+        <li><button class="opt-btn" onclick="checkQCM(4,'a','wrong')">🥄 Un ustensile fait d'un manche et d'une partie creuse</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(4,'b','correct')">🥄 Le contenu d'une cuillère</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(4,'c','wrong')">🥄 Une grosse casserole</button></li>
+      </ul>
+      <div id="a4-fb" class="fb hidden"></div>
+    </div>
+
+    <!-- Activité 5 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">5</div><div class="act-label">QCM — Les abréviations</div></div>
+      <div class="consigne">À quoi correspond chaque abréviation ?</div>
+
+      <p style="margin-bottom:8px;font-weight:bold;">« g » signifie :</p>
+      <ul class="opts" id="a5a-opts">
+        <li><button class="opt-btn" onclick="checkQCM('5a','a','correct')">⚖️ grammes</button></li>
+        <li><button class="opt-btn" onclick="checkQCM('5a','b','wrong')">⏱️ minutes</button></li>
+        <li><button class="opt-btn" onclick="checkQCM('5a','c','wrong')">🌡️ degrés</button></li>
+      </ul>
+      <div id="a5a-fb" class="fb hidden" style="margin-bottom:14px;"></div>
+
+      <p style="margin-bottom:8px;font-weight:bold;">« min » signifie :</p>
+      <ul class="opts" id="a5b-opts">
+        <li><button class="opt-btn" onclick="checkQCM('5b','a','wrong')">⚖️ grammes</button></li>
+        <li><button class="opt-btn" onclick="checkQCM('5b','b','correct')">⏱️ minutes</button></li>
+        <li><button class="opt-btn" onclick="checkQCM('5b','c','wrong')">🌡️ degrés</button></li>
+      </ul>
+      <div id="a5b-fb" class="fb hidden" style="margin-bottom:14px;"></div>
+
+      <p style="margin-bottom:8px;font-weight:bold;">« th » signifie :</p>
+      <ul class="opts" id="a5c-opts">
+        <li><button class="opt-btn" onclick="checkQCM('5c','a','wrong')">⚖️ grammes</button></li>
+        <li><button class="opt-btn" onclick="checkQCM('5c','b','wrong')">⏱️ minutes</button></li>
+        <li><button class="opt-btn" onclick="checkQCM('5c','c','correct')">🌡️ thermostat (degré du four)</button></li>
+      </ul>
+      <div id="a5c-fb" class="fb hidden"></div>
+    </div>
+  </section>
+
+  <!-- ══ ÉTAPE 3 ══ -->
+  <section id="step-3" class="hidden">
+    <div class="step-hdr">
+      <span class="step-badge">Étape 3 / 6</span>
+      <h2>🔍 Je comprends la recette</h2>
+    </div>
+
+    <!-- Activité 6 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">6</div><div class="act-label">Cases à cocher — Les ingrédients de la pâte</div></div>
+      <div class="consigne">🍳 Coche <strong>seulement</strong> les ingrédients nécessaires à la <strong>pâte</strong>.</div>
+      <div class="ck-list" id="a6-list">
+        <label class="ck-item"><input type="checkbox" id="a6-1"> 3 verres de farine</label>
+        <label class="ck-item"><input type="checkbox" id="a6-2"> 1 œuf</label>
+        <label class="ck-item"><input type="checkbox" id="a6-3"> La moitié d'un paquet de beurre</label>
+        <label class="ck-item"><input type="checkbox" id="a6-4"> Des granulés sucrés</label>
+        <label class="ck-item"><input type="checkbox" id="a6-5"> 1/2 sachet de levure</label>
+        <label class="ck-item"><input type="checkbox" id="a6-6"> Sel</label>
+        <label class="ck-item"><input type="checkbox" id="a6-7"> 3 cuillerées de crème fraîche</label>
+      </div>
+      <button class="btn btn-check" onclick="checkA6()">✔ Vérifier</button>
+      <div id="a6-fb" class="fb hidden"></div>
+    </div>
+
+    <!-- Activité 7 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">7</div><div class="act-label">Cases à cocher — Ustensiles pour la garniture</div></div>
+      <div class="consigne">🥣 Coche les ustensiles nécessaires pour préparer la <strong>garniture</strong>.</div>
+      <div class="ck-list" id="a7-list">
+        <label class="ck-item"><input type="checkbox" id="a7-1"> 1 casserole</label>
+        <label class="ck-item"><input type="checkbox" id="a7-2"> 1 cuillère en bois</label>
+        <label class="ck-item"><input type="checkbox" id="a7-3"> 1 moule à tarte</label>
+        <label class="ck-item"><input type="checkbox" id="a7-4"> 1 pinceau</label>
+        <label class="ck-item"><input type="checkbox" id="a7-5"> 1 saladier</label>
+      </div>
+      <button class="btn btn-check" onclick="checkA7()">✔ Vérifier</button>
+      <div id="a7-fb" class="fb hidden"></div>
+    </div>
+
+    <!-- Activité 8 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">8</div><div class="act-label">Vrai ou Faux ?</div></div>
+      <div class="consigne">Pour chaque affirmation, clique sur <strong>V</strong> (Vrai) ou <strong>F</strong> (Faux).</div>
+
+      <div class="vf-item">
+        <div class="vf-q">« Il faut du beurre mou pour préparer la pâte. »</div>
+        <div class="vf-btns">
+          <button class="vf-btn" id="a8a-V" onclick="checkVF('8a','V','V')">✅ Vrai</button>
+          <button class="vf-btn" id="a8a-F" onclick="checkVF('8a','F','V')">❌ Faux</button>
+        </div>
+        <div id="a8a-fb" class="fb hidden"></div>
+      </div>
+
+      <div class="vf-item">
+        <div class="vf-q">« La tarte reste au four 30 minutes. »</div>
+        <div class="vf-btns">
+          <button class="vf-btn" id="a8b-V" onclick="checkVF('8b','V','F')">✅ Vrai</button>
+          <button class="vf-btn" id="a8b-F" onclick="checkVF('8b','F','F')">❌ Faux</button>
+        </div>
+        <div id="a8b-fb" class="fb hidden"></div>
+      </div>
+
+      <div class="vf-item">
+        <div class="vf-q">« On doit manger la tarte dès sa sortie du four. »</div>
+        <div class="vf-btns">
+          <button class="vf-btn" id="a8c-V" onclick="checkVF('8c','V','F')">✅ Vrai</button>
+          <button class="vf-btn" id="a8c-F" onclick="checkVF('8c','F','F')">❌ Faux</button>
+        </div>
+        <div id="a8c-fb" class="fb hidden"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ÉTAPE 4 ══ -->
+  <section id="step-4" class="hidden">
+    <div class="step-hdr">
+      <span class="step-badge">Étape 4 / 6</span>
+      <h2>🗂️ Comment est organisée la recette ?</h2>
+    </div>
+
+    <!-- Activité 9 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">9</div><div class="act-label">Remettre dans l'ordre</div></div>
+      <div class="consigne">📋 Numérote les parties de la recette dans le <strong>bon ordre</strong> (de 1 à 4).</div>
+      <div class="ord-list">
+        <div class="ord-item">
+          <select class="ord-sel" id="ord-A">
+            <option value="">—</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+          <span class="ord-label">Les étapes de préparation</span>
+        </div>
+        <div class="ord-item">
+          <select class="ord-sel" id="ord-B">
+            <option value="">—</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+          <span class="ord-label">Le titre</span>
+        </div>
+        <div class="ord-item">
+          <select class="ord-sel" id="ord-C">
+            <option value="">—</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+          <span class="ord-label">La liste des ustensiles</span>
+        </div>
+        <div class="ord-item">
+          <select class="ord-sel" id="ord-D">
+            <option value="">—</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+          <span class="ord-label">La liste des ingrédients</span>
+        </div>
+      </div>
+      <button class="btn btn-check" onclick="checkA9()">✔ Vérifier</button>
+      <div id="a9-fb" class="fb hidden"></div>
+    </div>
+
+    <!-- Activité 10 -->
+    <div class="card">
+      <div class="act-head"><div class="act-num">10</div><div class="act-label">QCM — La ponctuation dans les listes</div></div>
+      <div class="consigne">Dans les listes d'ingrédients, y a-t-il des signes de ponctuation ?</div>
+      <ul class="opts" id="a10-opts">
+        <li><button class="opt-btn" onclick="checkQCM(10,'a','wrong')">✔ Oui, des virgules</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(10,'b','correct')">✘ Non, pas de ponctuation</button></li>
+        <li><button class="opt-btn" onclick="checkQCM(10,'c','wrong')">✔ Oui, des points</button></li>
+      </ul>
+      <div id="a10-fb" class="fb hidden"></div>
+    </div>
+  </section>
+
+  <!-- ══ ÉTAPE 5 ══ -->
+  <section id="step-5" class="hidden">
+    <div class="step-hdr">
+      <span class="step-badge">Étape 5 / 6</span>
+      <h2>✏️ Je complète le tableau des ingrédients</h2>
+    </div>
+
+    <div class="card">
+      <div class="act-head"><div class="act-num">11</div><div class="act-label">Tableau interactif</div></div>
+      <div class="consigne">À partir de la liste des ingrédients, complète le tableau avec les menus déroulants.</div>
+      <table class="ingr-table">
+        <thead>
+          <tr>
+            <th>La quantité</th>
+            <th style="text-align:center;">de / d'</th>
+            <th>L'ingrédient</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="prefill">3 verres</td>
+            <td class="de-cell">de</td>
+            <td class="prefill">farine 🌾</td>
+          </tr>
+          <tr>
+            <td>
+              <select id="t1-q">
+                <option value="">— quantité —</option>
+                <option>1 verre</option>
+                <option>1 œuf</option>
+                <option>1 petit pot</option>
+                <option>la moitié</option>
+                <option>1/2 sachet</option>
+              </select>
+            </td>
+            <td class="de-cell">de</td>
+            <td>
+              <select id="t1-i">
+                <option value="">— ingrédient —</option>
+                <option>sucre</option>
+                <option>crème fraîche</option>
+                <option>beurre (250g)</option>
+                <option>levure</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select id="t2-q">
+                <option value="">— quantité —</option>
+                <option>1 verre</option>
+                <option>1 œuf</option>
+                <option>1 petit pot</option>
+                <option>la moitié</option>
+                <option>1/2 sachet</option>
+              </select>
+            </td>
+            <td class="de-cell">de</td>
+            <td>
+              <select id="t2-i">
+                <option value="">— ingrédient —</option>
+                <option>sucre</option>
+                <option>crème fraîche</option>
+                <option>beurre (250g)</option>
+                <option>levure</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select id="t3-q">
+                <option value="">— quantité —</option>
+                <option>1 verre</option>
+                <option>1 œuf</option>
+                <option>1 petit pot</option>
+                <option>la moitié</option>
+                <option>1/2 sachet</option>
+              </select>
+            </td>
+            <td class="de-cell">de</td>
+            <td>
+              <select id="t3-i">
+                <option value="">— ingrédient —</option>
+                <option>sucre</option>
+                <option>crème fraîche</option>
+                <option>beurre (250g)</option>
+                <option>levure</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select id="t4-q">
+                <option value="">— quantité —</option>
+                <option>1 verre</option>
+                <option>1 œuf</option>
+                <option>1 petit pot</option>
+                <option>la moitié</option>
+                <option>1/2 sachet</option>
+              </select>
+            </td>
+            <td class="de-cell">de</td>
+            <td>
+              <select id="t4-i">
+                <option value="">— ingrédient —</option>
+                <option>sucre</option>
+                <option>crème fraîche</option>
+                <option>beurre (250g)</option>
+                <option>levure</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-check" onclick="checkA11()">✔ Vérifier le tableau</button>
+      <div id="a11-fb" class="fb hidden"></div>
+    </div>
+  </section>
+
+  <!-- ══ ÉTAPE 6 ══ -->
+  <section id="step-6" class="hidden">
+    <div class="step-hdr">
+      <span class="step-badge">Étape 6 / 6</span>
+      <h2>🖊️ J'invente une recette de fruit</h2>
+    </div>
+
+    <div class="card">
+      <div class="act-head"><div class="act-num">12</div><div class="act-label">Production écrite guidée</div></div>
+      <div class="consigne">
+        Manon a invité ses copines pour le goûter. Regarde ce qu'elle a préparé.<br>
+        <strong>Invente un titre pour cette recette et dresse la liste des ingrédients et des ustensiles nécessaires.</strong>
+      </div>
+
+      <!-- Illustration -->
+      <div style="text-align:center;margin-bottom:14px;font-size:3rem;">
+        🍓🫐🍉🎀🍡🥒✨
+      </div>
+      <p style="text-align:center;color:var(--brown-med);font-size:.9rem;margin-bottom:14px;">
+        <em>Une assiette avec des fruits sur des brochettes décoratives.</em>
+      </p>
+
+      <!-- Rules -->
+      <div class="rules-box">
+        <p>📌 Pour écrire la liste des ingrédients et des ustensiles :</p>
+        <ul>
+          <li>Je forme des <strong>groupes nominaux</strong></li>
+          <li>Je peux les enrichir avec une <strong>préposition</strong> (de / d' / en / à)</li>
+          <li>Je <strong>n'utilise PAS</strong> de ponctuation</li>
+          <li>Je m'aide des <strong>mots proposés</strong></li>
+        </ul>
+      </div>
+
+      <!-- Word bank -->
+      <div class="word-bank">
+        <h4>🗂️ Banque de mots — clique pour insérer dans le champ actif :</h4>
+        <div class="chips" id="chips-container">
+          <span class="chip" onclick="insertWord('une brochette')">une brochette</span>
+          <span class="chip" onclick="insertWord('un pic')">un pic</span>
+          <span class="chip" onclick="insertWord('un emporte-pièce')">un emporte-pièce</span>
+          <span class="chip" onclick="insertWord('une pastèque')">une pastèque</span>
+          <span class="chip" onclick="insertWord('des myrtilles')">des myrtilles</span>
+          <span class="chip" onclick="insertWord('des fraises')">des fraises</span>
+          <span class="chip" onclick="insertWord('des guimauves')">des guimauves</span>
+          <span class="chip" onclick="insertWord('une barquette')">une barquette</span>
+          <span class="chip" onclick="insertWord('un morceau')">un morceau</span>
+          <span class="chip" onclick="insertWord('un paquet')">un paquet</span>
+          <span class="chip" onclick="insertWord('une moitié')">une moitié</span>
+          <span class="chip" onclick="insertWord('de')">de</span>
+          <span class="chip" onclick="insertWord('d\'')">d'</span>
+          <span class="chip" onclick="insertWord('en')">en</span>
+          <span class="chip" onclick="insertWord('à')">à</span>
+        </div>
+      </div>
+
+      <!-- Writing fields -->
+      <div class="wf-group">
+        <label for="e6-titre">📝 Titre de la recette :</label>
+        <input type="text" id="e6-titre" placeholder="ex : Brochettes de fruits d'été" onfocus="setActiveField(this)">
+      </div>
+      <div class="wf-group">
+        <label for="e6-ingr">🥝 Liste des ingrédients :</label>
+        <textarea id="e6-ingr" placeholder="Écris les ingrédients, un par ligne…" rows="5" onfocus="setActiveField(this)"></textarea>
+      </div>
+      <div class="wf-group">
+        <label for="e6-ust">🥄 Liste des ustensiles :</label>
+        <textarea id="e6-ust" placeholder="Écris les ustensiles, un par ligne…" rows="4" onfocus="setActiveField(this)"></textarea>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end step-area -->
+</div><!-- end app-screen -->
+
+<!-- ════════════════════════════════════════
+  BOTTOM NAV
+═════════════════════════════════════════ -->
+<div id="nav-bar" class="hidden">
+  <button class="btn btn-back" id="btn-back" onclick="goBack()">← Retour</button>
+  <div class="nav-step-info" id="nav-info">Étape 1 / 6</div>
+  <button class="btn btn-next" id="btn-next" onclick="goNext()">Suivant →</button>
+</div>
+
+<!-- ════════════════════════════════════════
+  FINAL SCREEN
+═════════════════════════════════════════ -->
+<div id="final-screen" class="screen">
+  <div class="final-card">
+    <div class="final-school">🏫 Institutions Éducatives Amal</div>
+    <h2>🏆 Bravo !</h2>
+    <div id="final-name" style="color:var(--brown-med);font-size:1rem;margin-bottom:8px;"></div>
+    <div class="score-big" id="final-score">0</div>
+    <div class="score-denom">/ 20</div>
+    <div class="stars" id="final-stars">⭐⭐⭐</div>
+    <div class="final-msg" id="final-msg"></div>
+
+    <hr style="border:none;border-top:2px solid var(--cream);margin:16px 0;">
+    <p style="font-size:.9rem;color:var(--brown-med);margin-bottom:4px;">Ta production écrite :</p>
+    <div id="recap-prod" style="background:var(--cream);border-radius:10px;padding:12px;text-align:left;font-size:.9rem;margin-bottom:14px;"></div>
+
+    <button class="btn btn-send" id="btn-send" onclick="sendFormspree()">📤 Envoyer à ma maîtresse</button>
+    <div id="send-status" class="send-status hidden"></div>
+    <button class="btn btn-pdf" onclick="downloadPDF()">📄 Télécharger mes réponses en PDF</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  TEACHER LOGIN
+═════════════════════════════════════════ -->
+<div id="teacher-login-screen" class="screen">
+  <div class="teacher-login-card">
+    <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+    <h2 style="color:var(--brown);margin-bottom:6px;">Tableau de bord</h2>
+    <p style="color:var(--brown-med);font-size:.9rem;margin-bottom:20px;">Réservé à l'enseignante</p>
+    <div class="lf">
+      <label for="t-pw">Mot de passe :</label>
+      <input type="password" id="t-pw" placeholder="••••••••">
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="checkTeacherLogin()">
+      🔓 Accéder
+    </button>
+    <div id="t-pw-err" class="fb no hidden" style="margin-top:8px;">❌ Mot de passe incorrect.</div>
+    <div style="margin-top:16px;">
+      <span style="font-size:.85rem;color:var(--brown-med);cursor:pointer;text-decoration:underline;"
+        onclick="showLoginScreen()">← Retour</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  TEACHER DASHBOARD
+═════════════════════════════════════════ -->
+<div id="teacher-screen" class="screen">
+  <div id="teacher-hdr-div" class="teacher-hdr">
+    <h2>📊 Tableau de bord — Tarte au Sucre EB3</h2>
+    <p id="teacher-count"></p>
+  </div>
+  <div id="teacher-list"></div>
+  <div style="margin-top:16px;text-align:center;">
+    <button class="btn btn-back" onclick="showLoginScreen()">← Retour à l'accueil</button>
+    <button class="btn" style="background:var(--err);color:white;margin-left:10px;" onclick="clearData()">🗑️ Effacer tout</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  JAVASCRIPT
+═════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── STATE ─── */
+const S = {
+  prenom: '',
+  nom: '',
+  ecole: '',
+  step: 1,
+  totalSteps: 6,
+  score: 0,
+  maxScore: 20,
+  scored: {},      // actId → pts awarded
+  activeField: null,  // currently focused textarea/input for word insertion
+};
+
+/* ─── SCORE TABLES (points per activity) ─── */
+const ACT_MAX = {
+  1:1, 2:1, '3a':1, '3b':1, 4:1,
+  '5a':1, '5b':1, '5c':1,
+  6:2, 7:1,
+  '8a':1, '8b':1, '8c':1,
+  9:2, 10:1,
+  11:3
+};
+
+/* ─── HELPERS ─── */
+function el(id){ return document.getElementById(id); }
+function show(id){ el(id).classList.remove('hidden'); }
+function hide(id){ el(id).classList.add('hidden'); }
+function showScreen(id){
+  ['login-screen','app-screen','final-screen','teacher-login-screen','teacher-screen']
+    .forEach(s=>{ el(s).classList.remove('on'); el(s).classList.add('screen'); });
+  el(id).classList.add('on');
+  el(id).classList.remove('screen');
+  // special: login has its own display
+  if(id==='login-screen'){ el(id).style.display='flex'; }
+}
+
+function addScore(actId, pts){
+  if(S.scored[actId]!==undefined) return; // already scored
+  S.scored[actId] = pts;
+  S.score = Math.min(S.maxScore, S.score + pts);
+  updateHdr();
+}
+
+function updateHdr(){
+  el('score-badge').textContent = `⭐ ${S.score} / ${S.maxScore}`;
+  const pct = (S.step-1)/S.totalSteps*100;
+  el('pb').style.width = pct+'%';
+}
+
+/* ─── LOGIN ─── */
+function startApp(){
+  const p = el('inp-prenom').value.trim();
+  const n = el('inp-nom').value.trim();
+  const e = el('inp-ecole').value;
+  if(!p||!n||!e){ show('login-err'); return; }
+  hide('login-err');
+  S.prenom=p; S.nom=n; S.ecole=e;
+  el('login-screen').style.display='none';
+  show('hdr'); show('nav-bar');
+  showScreen('app-screen');
+  renderStep(1);
+}
+
+/* ─── STEP NAVIGATION ─── */
+function renderStep(n){
+  S.step = n;
+  // Hide all sections
+  for(let i=1;i<=6;i++){ el('step-'+i).classList.add('hidden'); }
+  // Show current
+  el('step-'+n).classList.remove('hidden');
+  updateHdr();
+  updateNav();
+  window.scrollTo(0,0);
+}
+
+function updateNav(){
+  const n=S.step;
+  el('nav-info').textContent = `Étape ${n} / ${S.totalSteps}`;
+  // Back button
+  if(n===1){
+    el('btn-back').style.visibility='hidden';
+  } else {
+    el('btn-back').style.visibility='visible';
+  }
+  // Next button text
+  if(n===S.totalSteps){
+    el('btn-next').textContent = '✅ Terminer';
+  } else {
+    el('btn-next').textContent = 'Suivant →';
+  }
+}
+
+function goBack(){
+  if(S.step>1) renderStep(S.step-1);
+}
+
+function goNext(){
+  if(S.step<S.totalSteps){
+    renderStep(S.step+1);
+  } else {
+    showFinal();
+  }
+}
+
+/* ─── QCM ENGINE ─── */
+// actId, choiceId, result ('correct'|'wrong')
+function checkQCM(actId, choiceId, result){
+  const liItems = document.querySelectorAll(`#a${actId}-opts li`);
+  const opts = Array.from(liItems).map(li=>li.querySelector('.opt-btn'));
+  opts.forEach(b=>{ if(b){b.classList.add('disabled');b.onclick=null;} });
+  const idx = choiceId==='a'?0:choiceId==='b'?1:2;
+  const btn = liItems[idx]?.querySelector('.opt-btn');
+  if(btn){
+    btn.classList.add(result);
+  }
+  const fb = el('a'+actId+'-fb');
+  fb.classList.remove('hidden','ok','no');
+  if(result==='correct'){
+    fb.textContent='✅ Bravo ! C\'est la bonne réponse !';
+    fb.classList.add('ok');
+    addScore(actId, 1);
+  } else {
+    fb.textContent='❌ Pas tout à fait ! Regarde bien le texte.';
+    fb.classList.add('no');
+    addScore(actId, 0);
+    // highlight correct answer
+    Array.from(liItems).forEach(li=>{
+      const b=li.querySelector('.opt-btn');
+      if(b && b.getAttribute('onclick') && b.getAttribute('onclick').includes("'correct'")){
+        b.classList.add('correct');
+      }
+    });
+  }
+}
+
+/* ─── ACTIVITÉ 3 — Association ─── */
+function checkA3(){
+  const v1=el('a3-1').value;
+  const v2=el('a3-2').value;
+  if(!v1||!v2){
+    showFb('a3-fb','no','⚠️ Choisis une étiquette pour chaque liste !'); return;
+  }
+  const ok1=(v1==='ingrédient');
+  const ok2=(v2==='ustensile');
+  let pts=0;
+  if(ok1) pts++;
+  if(ok2) pts++;
+  el('a3-1').style.borderColor=ok1?'var(--ok)':'var(--err)';
+  el('a3-2').style.borderColor=ok2?'var(--ok)':'var(--err)';
+  el('a3-1').disabled=true; el('a3-2').disabled=true;
+  addScore('3a', ok1?1:0);
+  addScore('3b', ok2?1:0);
+  if(pts===2){
+    showFb('a3-fb','ok','✅ Parfait ! Liste A = ingrédient, Liste B = ustensile.');
+  } else {
+    showFb('a3-fb','no',`❌ ${pts}/2 — Liste A : ingrédient  |  Liste B : ustensile`);
+  }
+}
+
+/* ─── ACTIVITÉ 6 — Checkboxes Pâte ─── */
+// Correct to check: 1,2,3,5,6 — Incorrect: 4,7
+function checkA6(){
+  const correct=[1,2,3,5,6]; const wrong=[4,7];
+  const items=el('a6-list').querySelectorAll('.ck-item');
+  let pts=0, perfect=true;
+  items.forEach((item,idx)=>{
+    const n=idx+1;
+    const cb=item.querySelector('input');
+    const checked=cb.checked;
+    cb.disabled=true;
+    item.style.cursor='default';
+    if(correct.includes(n)){
+      if(checked){ item.classList.add('ck-ok'); pts++; }
+      else { item.classList.add('ck-err'); perfect=false; }
+    } else {
+      if(checked){ item.classList.add('ck-err'); perfect=false; }
+      else { item.classList.add('ck-ok'); }
+    }
+  });
+  const finalPts = perfect?2:(pts>=4?1:0);
+  addScore(6, finalPts);
+  if(perfect){
+    showFb('a6-fb','ok','✅ Parfait ! Tu as bien identifié les ingrédients de la pâte. (2/2)');
+  } else if(finalPts===1){
+    showFb('a6-fb','no',`👍 Presque ! Tu as coché ${pts}/5 bons ingrédients. (1/2)`);
+  } else {
+    showFb('a6-fb','no','❌ Relis bien la liste des ingrédients. Les granulés sucrés et la crème fraîche sont pour la garniture.');
+  }
+}
+
+/* ─── ACTIVITÉ 7 — Checkboxes Garniture ─── */
+// Correct: 1,2,5 — Wrong: 3,4
+function checkA7(){
+  const correct=[1,2,5]; const wrong=[3,4];
+  const items=el('a7-list').querySelectorAll('.ck-item');
+  let allOk=true;
+  items.forEach((item,idx)=>{
+    const n=idx+1;
+    const cb=item.querySelector('input');
+    const checked=cb.checked;
+    cb.disabled=true;
+    item.style.cursor='default';
+    if(correct.includes(n)){
+      if(checked) item.classList.add('ck-ok');
+      else{ item.classList.add('ck-err'); allOk=false; }
+    } else {
+      if(checked){ item.classList.add('ck-err'); allOk=false; }
+      else item.classList.add('ck-ok');
+    }
+  });
+  addScore(7, allOk?1:0);
+  if(allOk){
+    showFb('a7-fb','ok','✅ Bravo ! Casserole, cuillère en bois et saladier — pour chauffer et mélanger la garniture.');
+  } else {
+    showFb('a7-fb','no','❌ Regarde : la garniture est chauffée dans une casserole, mélangée dans un saladier avec une cuillère en bois.');
+  }
+}
+
+/* ─── ACTIVITÉ 8 — Vrai/Faux ─── */
+function checkVF(actId, choice, correct){
+  const btnV=el('a8'+actId.slice(1)+'-V');
+  const btnF=el('a8'+actId.slice(1)+'-F');
+  // Disable both
+  btnV.classList.add('disabled'); btnF.classList.add('disabled');
+  btnV.onclick=null; btnF.onclick=null;
+  const chose=choice==='V'?btnV:btnF;
+  const right=correct==='V'?btnV:btnF;
+  const isCorrect=(choice===correct);
+  if(isCorrect){
+    chose.classList.add('correct');
+    addScore(actId,1);
+    showFb('a8'+actId.slice(1)+'-fb','ok','✅ C\'est exact !');
+  } else {
+    chose.classList.add('wrong');
+    right.classList.add('correct');
+    addScore(actId,0);
+    const msgs={
+      '8b':'❌ Faux ! La tarte cuit 36 minutes.',
+      '8c':'❌ Faux ! Il faut la laisser complètement refroidir.'
+    };
+    showFb('a8'+actId.slice(1)+'-fb','no', msgs[actId]||'❌ Pas tout à fait !');
+  }
+}
+
+/* ─── ACTIVITÉ 9 — Ordre ─── */
+// Correct: A=4, B=1, C=3, D=2
+function checkA9(){
+  const vals = {
+    A: el('ord-A').value,
+    B: el('ord-B').value,
+    C: el('ord-C').value,
+    D: el('ord-D').value,
+  };
+  if(Object.values(vals).some(v=>!v)){
+    showFb('a9-fb','no','⚠️ Numérote toutes les parties (1 à 4) !'); return;
+  }
+  // Check for duplicates
+  const nums=Object.values(vals);
+  if(new Set(nums).size!==4){
+    showFb('a9-fb','no','⚠️ Chaque numéro doit être utilisé une seule fois !'); return;
+  }
+  const correct={A:'4',B:'1',C:'3',D:'2'};
+  let pts=0;
+  ['A','B','C','D'].forEach(k=>{
+    if(vals[k]===correct[k]) pts++;
+    el('ord-'+k).style.borderColor=vals[k]===correct[k]?'var(--ok)':'var(--err)';
+    el('ord-'+k).disabled=true;
+  });
+  const awarded=pts===4?2:(pts>=2?1:0);
+  addScore(9,awarded);
+  if(pts===4){
+    showFb('a9-fb','ok','✅ Parfait ! Titre → Ingrédients → Ustensiles → Étapes de préparation (2/2)');
+  } else {
+    showFb('a9-fb','no',`❌ ${pts}/4 bonnes positions. L'ordre est : 1-Titre, 2-Ingrédients, 3-Ustensiles, 4-Étapes.`);
+  }
+}
+
+/* ─── ACTIVITÉ 11 — Tableau ─── */
+// Row 1: 1 verre / sucre
+// Row 2: 1 petit pot / crème fraîche
+// Row 3: la moitié / beurre (250g)
+// Row 4: 1/2 sachet / levure
+const TABLE_CORRECT = [
+  {q:'1 verre', i:'sucre'},
+  {q:'1 petit pot', i:'crème fraîche'},
+  {q:'la moitié', i:'beurre (250g)'},
+  {q:'1/2 sachet', i:'levure'},
+];
+function checkA11(){
+  let pts=0;
+  const unset=[el('t1-q'),el('t1-i'),el('t2-q'),el('t2-i'),
+               el('t3-q'),el('t3-i'),el('t4-q'),el('t4-i')];
+  if(unset.some(s=>!s.value)){
+    showFb('a11-fb','no','⚠️ Remplis tous les champs du tableau !'); return;
+  }
+  TABLE_CORRECT.forEach((row,idx)=>{
+    const n=idx+1;
+    const qEl=el('t'+n+'-q'); const iEl=el('t'+n+'-i');
+    const qOk=qEl.value===row.q; const iOk=iEl.value===row.i;
+    qEl.style.borderColor=qOk?'var(--ok)':'var(--err)';
+    iEl.style.borderColor=iOk?'var(--ok)':'var(--err)';
+    qEl.disabled=true; iEl.disabled=true;
+    if(qOk&&iOk) pts+=0.75;
+  });
+  const finalPts=Math.round(pts); // 0,1,2,or3
+  addScore(11, finalPts);
+  if(pts===3){
+    showFb('a11-fb','ok','✅ Tableau parfaitement complété ! (3/3)');
+  } else {
+    showFb('a11-fb','no',
+      `❌ ${Math.round(pts*100/3*100/100)}% correct. Corrigé : 1 verre de sucre | 1 petit pot de crème fraîche | la moitié de beurre (250g) | 1/2 sachet de levure`);
+  }
+}
+
+/* ─── WORD INSERTION ─── */
+function setActiveField(el){ S.activeField=el; }
+function insertWord(word){
+  const f=S.activeField;
+  if(!f){ return; }
+  if(f.tagName==='TEXTAREA'||f.tagName==='INPUT'){
+    const start=f.selectionStart;
+    const end=f.selectionEnd;
+    const val=f.value;
+    const space = val.length>0 && !val.endsWith(' ') && !val.endsWith('\n') ? ' ' : '';
+    f.value = val.substring(0,start) + space + word + ' ' + val.substring(end);
+    const newPos = start + space.length + word.length + 1;
+    f.setSelectionRange(newPos, newPos);
+    f.focus();
+  }
+}
+
+/* ─── SHOW FINAL ─── */
+function showFinal(){
+  const score=S.score;
+  el('final-name').textContent=`${S.prenom} ${S.nom} — ${S.ecole}`;
+  el('final-score').textContent=score;
+  // Stars
+  let stars='';
+  if(score>=17) stars='⭐⭐⭐';
+  else if(score>=13) stars='⭐⭐';
+  else if(score>=8) stars='⭐';
+  else stars='👏';
+  el('final-stars').textContent=stars;
+  // Message
+  let msg='';
+  if(score>=17) msg='Excellent travail ! Tu as très bien lu la recette ! 🏆';
+  else if(score>=15) msg='Bravo ! Tu as bien compris la recette ! 🎉';
+  else if(score>=10) msg='Bon travail ! Continue comme ça ! 💪';
+  else msg='Tu peux le faire ! Relis bien le texte et recommence. 📖';
+  el('final-msg').textContent=msg;
+  // Recap production écrite
+  const titre=el('e6-titre').value||'(pas de titre)';
+  const ingr=el('e6-ingr').value||'(pas d\'ingrédients)';
+  const ust=el('e6-ust').value||'(pas d\'ustensiles)';
+  el('recap-prod').innerHTML=
+    `<strong>Titre :</strong> ${titre}<br>
+     <strong>Ingrédients :</strong> ${ingr.replace(/\n/g,'<br>')}<br>
+     <strong>Ustensiles :</strong> ${ust.replace(/\n/g,'<br>')}`;
+  hide('hdr'); hide('nav-bar');
+  showScreen('final-screen');
+  // Save to localStorage
+  saveLocally();
+  // Confetti
+  if(score>=15) launchConfetti();
+}
+
+/* ─── LOCAL SAVE ─── */
+function saveLocally(){
+  const subs=JSON.parse(localStorage.getItem('tarte_subs')||'[]');
+  subs.push({
+    date: new Date().toLocaleDateString('fr-FR'),
+    time: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+    prenom: S.prenom,
+    nom: S.nom,
+    score: S.score,
+    maxScore: S.maxScore,
+    titre: el('e6-titre').value,
+    ingr: el('e6-ingr').value,
+    ust: el('e6-ust').value,
+  });
+  localStorage.setItem('tarte_subs', JSON.stringify(subs));
+}
+
+/* ─── FORMSPREE SEND ─── */
+async function sendFormspree(){
+  const btn=el('btn-send');
+  btn.disabled=true; btn.textContent='⏳ Envoi en cours…';
+  const FORM_URL='https://formspree.io/f/VOTRE_URL_ICI'; // ← REMPLACER
+  const data={
+    prenom: S.prenom,
+    nom: S.nom,
+    score: S.score+'/'+S.maxScore,
+    titre_recette: el('e6-titre').value,
+    ingredients: el('e6-ingr').value,
+    ustensiles: el('e6-ust').value,
+    date_heure: new Date().toLocaleString('fr-FR'),
+  };
+  try {
+    const r=await fetch(FORM_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    });
+    const st=el('send-status');
+    st.classList.remove('hidden','ok','err');
+    if(r.ok){
+      st.textContent='✅ Envoyé avec succès à la maîtresse !';
+      st.classList.add('ok');
+      btn.textContent='✅ Envoyé !';
+    } else {
+      throw new Error('HTTP '+r.status);
+    }
+  } catch(e){
+    const st=el('send-status');
+    st.classList.remove('hidden','ok','err');
+    st.textContent='⚠️ Impossible d\'envoyer maintenant (pas de connexion). Tes réponses sont sauvegardées localement.';
+    st.classList.add('err');
+    btn.disabled=false; btn.textContent='📤 Réessayer';
+  }
+}
+
+/* ─── TEACHER ─── */
+function showTeacherLogin(){ showScreen('teacher-login-screen'); }
+function showLoginScreen(){
+  showScreen('login-screen');
+  el('login-screen').style.display='flex';
+}
+
+function checkTeacherLogin(){
+  const pw=el('t-pw').value;
+  if(pw==='PROF2025'){
+    hide('t-pw-err');
+    loadTeacherDashboard();
+  } else {
+    show('t-pw-err');
+  }
+}
+
+function loadTeacherDashboard(){
+  const subs=JSON.parse(localStorage.getItem('tarte_subs')||'[]');
+  el('teacher-count').textContent=`${subs.length} élève(s) ont complété les activités.`;
+  const list=el('teacher-list');
+  if(subs.length===0){
+    list.innerHTML='<div class="no-data">Aucune réponse enregistrée pour le moment.</div>';
+  } else {
+    list.innerHTML=subs.map((s,i)=>`
+      <div class="student-row">
+        <div class="student-name">📚 ${s.prenom} ${s.nom} <span style="color:var(--brown-med);font-size:.85rem;font-weight:normal;">${s.date} à ${s.time}</span></div>
+        <div class="student-score">Score : ${s.score} / ${s.maxScore}</div>
+        <div class="student-prod">
+          <strong>Titre :</strong> ${s.titre||'—'}<br>
+          <strong>Ingrédients :</strong> ${(s.ingr||'—').replace(/\n/g,'<br>')}<br>
+          <strong>Ustensiles :</strong> ${(s.ust||'—').replace(/\n/g,'<br>')}
+        </div>
+      </div>
+    `).join('');
+  }
+  showScreen('teacher-screen');
+}
+
+function clearData(){
+  if(confirm('Effacer toutes les réponses enregistrées ?')){
+    localStorage.removeItem('tarte_subs');
+    loadTeacherDashboard();
+  }
+}
+
+/* ─── CONFETTI ─── */
+function launchConfetti(){
+  const colors=['#F5A623','#C95B2A','#6B9E6E','#F08054','#FFF6C0','#5C3317','#C4956A'];
+  for(let i=0;i<60;i++){
+    const d=document.createElement('div');
+    d.className='cf';
+    const size=Math.random()*10+6;
+    d.style.cssText=`
+      left:${Math.random()*100}vw;
+      width:${size}px;height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${Math.random()*2+1.5}s;
+      animation-delay:${Math.random()*.8}s;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    document.body.appendChild(d);
+    d.addEventListener('animationend',()=>d.remove());
+  }
+}
+
+/* ─── FEEDBACK HELPER ─── */
+function showFb(id, type, msg){
+  const f=el(id);
+  f.textContent=msg;
+  f.classList.remove('hidden','ok','no');
+  f.classList.add(type);
+}
+
+/* ─── PDF DOWNLOAD ─── */
+function downloadPDF(){
+  // Build the score detail list
+  const actLabels = {
+    1: 'QCM — Genre du texte (découverte)',
+    2: 'QCM — Nom du genre textuel',
+    '3a': 'Association — Liste ingrédients',
+    '3b': 'Association — Liste ustensiles',
+    4: 'QCM — Définition de « cuillerée »',
+    '5a': 'Abréviation « g »',
+    '5b': 'Abréviation « min »',
+    '5c': 'Abréviation « th »',
+    6: 'Cases à cocher — Ingrédients de la pâte',
+    7: 'Cases à cocher — Ustensiles garniture',
+    '8a': 'Vrai/Faux — Beurre mou',
+    '8b': 'Vrai/Faux — 30 minutes au four',
+    '8c': 'Vrai/Faux — Manger dès la sortie du four',
+    9: 'Remise en ordre — Structure de la recette',
+    10: 'QCM — Ponctuation dans les listes',
+    11: 'Tableau — Quantités et ingrédients',
+  };
+  const maxPts={
+    1:1,2:1,'3a':1,'3b':1,4:1,'5a':1,'5b':1,'5c':1,
+    6:2,7:1,'8a':1,'8b':1,'8c':1,9:2,10:1,11:3
+  };
+
+  let resultsHTML='';
+  Object.keys(actLabels).forEach(k=>{
+    const pts=S.scored[k];
+    const max=maxPts[k];
+    if(pts===undefined){
+      resultsHTML+=`<div class="pdf-act">⬜ <span>${actLabels[k]}</span> : non répondu</div>`;
+    } else if(pts===max){
+      resultsHTML+=`<div class="pdf-act pdf-ok">✅ <span>${actLabels[k]}</span> : ${pts}/${max}</div>`;
+    } else if(pts>0){
+      resultsHTML+=`<div class="pdf-act" style="color:#E67E22;">◑ <span>${actLabels[k]}</span> : ${pts}/${max}</div>`;
+    } else {
+      resultsHTML+=`<div class="pdf-act pdf-no">❌ <span>${actLabels[k]}</span> : 0/${max}</div>`;
+    }
+  });
+
+  const titre=el('e6-titre').value||'(non rempli)';
+  const ingr=el('e6-ingr').value||'(non rempli)';
+  const ust=el('e6-ust').value||'(non rempli)';
+  const dateStr=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+
+  // Stars
+  let stars='';
+  if(S.score>=17) stars='⭐⭐⭐ Excellent !';
+  else if(S.score>=15) stars='⭐⭐ Très bien !';
+  else if(S.score>=10) stars='⭐ Bien !';
+  else stars='Continue tes efforts !';
+
+  // Inject into print zone
+  el('pdf-zone').innerHTML=`
+    <div class="pdf-school">🏫 Institutions Éducatives Amal</div>
+    <div class="pdf-title">🥧 Tarte au Sucre — Activités EB3</div>
+    <div class="pdf-sub">Français — Lecture et compréhension d'un texte injonctif</div>
+    <hr class="pdf-sep">
+    <div class="pdf-student">👤 Élève : <strong>${S.prenom} ${S.nom}</strong></div>
+    <div class="pdf-student">📅 Date : ${dateStr}</div>
+    <div class="pdf-score-line">Score final : ${S.score} / ${S.maxScore} &nbsp;—&nbsp; ${stars}</div>
+    <hr class="pdf-sep">
+    <div class="pdf-results-title">📋 Détail des activités :</div>
+    ${resultsHTML}
+    <hr class="pdf-sep">
+    <div class="pdf-section-title">🖊️ Production écrite — J'invente une recette de fruit</div>
+    <div class="pdf-section-title" style="margin-top:10px;">Titre :</div>
+    <div class="pdf-content">${titre}</div>
+    <div class="pdf-section-title">Ingrédients :</div>
+    <div class="pdf-content">${ingr}</div>
+    <div class="pdf-section-title">Ustensiles :</div>
+    <div class="pdf-content">${ust}</div>
+    <div class="pdf-footer">
+      Document généré automatiquement — Institutions Éducatives Amal &nbsp;|&nbsp; ${dateStr}
+    </div>
+  `;
+  window.print();
+}
+
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded',()=>{
+  el('login-screen').style.display='flex';
+  // Enter key on login fields
+  el('inp-nom').addEventListener('keydown',e=>{ if(e.key==='Enter') startApp(); });
+  el('inp-prenom').addEventListener('keydown',e=>{ if(e.key==='Enter') el('inp-nom').focus(); });
+  // Keep track of focused field globally
+  document.querySelectorAll('.wf-group input, .wf-group textarea').forEach(f=>{
+    f.addEventListener('focus',()=>S.activeField=f);
+  });
+});
+</script>
+<!-- Hidden zone for PDF print -->
+<div id="pdf-zone" style="display:none;"></div>
+
+</body>
+</html>
