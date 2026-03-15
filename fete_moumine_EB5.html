@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Fête de Moumine — EB5</title>
+<style>
+  :root {
+    --bleu: #1a3a5c;
+    --bleu-clair: #2d6a9f;
+    --or: #c9a84c;
+    --vert: #1a7a4a;
+    --rouge: #c0392b;
+    --creme: #fdf8f0;
+    --violet: #6c3483;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--creme); color: #222; min-height: 100vh; }
+
+  /* LOGIN */
+  #ecran-login {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%);
+  }
+  .login-box {
+    background: white; border-radius: 20px; padding: 48px 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; width: 380px; max-width: 95vw;
+  }
+  .login-box .emoji { font-size: 64px; margin-bottom: 16px; }
+  .login-box h1 { font-size: 22px; color: var(--bleu); margin-bottom: 6px; }
+  .login-box p { color: #888; font-size: 14px; margin-bottom: 28px; }
+  .login-box input {
+    width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 10px;
+    font-size: 16px; margin-bottom: 14px; transition: border 0.2s; outline: none;
+  }
+  .login-box input:focus { border-color: var(--bleu-clair); }
+  .btn-login {
+    width: 100%; padding: 14px; background: var(--bleu); color: white;
+    border: none; border-radius: 10px; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-login:hover { background: var(--bleu-clair); }
+  .erreur-login { color: var(--rouge); font-size: 13px; margin-top: 8px; display: none; }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--bleu) 0%, #2d6a9f 100%);
+    color: white; padding: 32px 24px 28px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  header::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px; background: linear-gradient(90deg, var(--or), #f0c040, var(--or));
+  }
+  header h1 { font-size: clamp(1.4rem, 4vw, 2rem); margin-bottom: 6px; }
+  header p { font-size: 14px; opacity: 0.8; }
+  .badge-eleve {
+    display: inline-block; margin-top: 10px; background: rgba(255,255,255,0.2);
+    padding: 4px 14px; border-radius: 20px; font-size: 13px;
+  }
+
+  /* BARRE DE PROGRESSION */
+  .barre-prog-container { background: white; padding: 14px 24px; border-bottom: 1px solid #e8e8e8; }
+  .barre-labels { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 6px; }
+  .barre-prog-bg { background: #e8e8e8; border-radius: 10px; height: 10px; overflow: hidden; }
+  .barre-prog-fill { height: 100%; background: linear-gradient(90deg, var(--bleu-clair), var(--or)); border-radius: 10px; transition: width 0.5s ease; }
+
+  /* MAIN */
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px 80px; }
+
+  /* SECTION */
+  .section {
+    background: white; border-radius: 16px; padding: 28px 24px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.07); margin-bottom: 20px;
+    border-left: 5px solid var(--bleu);
+  }
+  .section.vert { border-left-color: var(--vert); }
+  .section.or { border-left-color: var(--or); }
+  .section.violet { border-left-color: var(--violet); }
+  .section.rouge { border-left-color: var(--rouge); }
+
+  .section-badge {
+    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+    margin-bottom: 10px; color: white;
+  }
+  .badge-bleu { background: var(--bleu); }
+  .badge-vert { background: var(--vert); }
+  .badge-or { background: var(--or); color: #333; }
+  .badge-violet { background: var(--violet); }
+  .badge-rouge { background: var(--rouge); }
+
+  .section h2 { font-size: 17px; color: var(--bleu); margin-bottom: 14px; line-height: 1.4; }
+
+  /* TEXTE */
+  .texte-support {
+    background: #f8f9ff; border-radius: 10px; padding: 20px;
+    font-size: 15px; line-height: 1.9; color: #333;
+    border: 1px solid #e0e4f0;
+  }
+
+  /* QCM */
+  .question { margin-bottom: 20px; }
+  .question p { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 10px; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    padding: 11px 16px; border: 2px solid #e0e0e0; border-radius: 10px;
+    background: white; text-align: left; cursor: pointer; font-size: 14px;
+    transition: all 0.2s; color: #333;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--bleu-clair); background: #f0f6ff; }
+  .option-btn.correct { border-color: var(--vert); background: #eafaf1; color: var(--vert); font-weight: 600; }
+  .option-btn.incorrect { border-color: var(--rouge); background: #fdedec; color: var(--rouge); }
+  .option-btn.revele { border-color: var(--vert); background: #eafaf1; color: var(--vert); }
+
+  /* VRAI/FAUX */
+  .vf-groupe { display: flex; gap: 10px; margin-top: 8px; }
+  .vf-btn {
+    flex: 1; padding: 10px; border: 2px solid #e0e0e0; border-radius: 10px;
+    background: white; cursor: pointer; font-size: 14px; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .vf-btn:hover:not(:disabled) { border-color: var(--bleu-clair); }
+  .vf-btn.correct { border-color: var(--vert); background: #eafaf1; color: var(--vert); }
+  .vf-btn.incorrect { border-color: var(--rouge); background: #fdedec; color: var(--rouge); }
+
+  /* TEXTE À TROUS */
+  .trous-container { font-size: 15px; line-height: 2.2; }
+  .trou {
+    display: inline-block; border: none; border-bottom: 2px solid var(--bleu-clair);
+    background: #f0f6ff; padding: 2px 8px; border-radius: 4px;
+    min-width: 80px; font-size: 14px; text-align: center; color: var(--bleu);
+    outline: none; transition: all 0.2s;
+  }
+  .trou:focus { background: #dbeafe; border-bottom-color: var(--bleu); }
+  .trou.correct { background: #eafaf1; border-bottom-color: var(--vert); color: var(--vert); }
+  .trou.incorrect { background: #fdedec; border-bottom-color: var(--rouge); color: var(--rouge); }
+
+  /* PRODUCTION ÉCRITE */
+  textarea {
+    width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 10px;
+    font-size: 14px; line-height: 1.7; resize: vertical; min-height: 120px;
+    font-family: inherit; outline: none; transition: border 0.2s;
+  }
+  textarea:focus { border-color: var(--bleu-clair); }
+  .compteur { font-size: 12px; color: #888; text-align: right; margin-top: 4px; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 10px; padding: 10px 14px; border-radius: 8px;
+    font-size: 13px; display: none;
+  }
+  .feedback.correct { background: #eafaf1; color: var(--vert); border: 1px solid #a9dfbf; }
+  .feedback.incorrect { background: #fdedec; color: var(--rouge); border: 1px solid #f1948a; }
+
+  /* BOUTONS ACTION */
+  .btn {
+    padding: 12px 24px; border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primaire { background: var(--bleu); color: white; }
+  .btn-primaire:hover { background: var(--bleu-clair); transform: translateY(-1px); }
+  .btn-vert { background: var(--vert); color: white; }
+  .btn-vert:hover { background: #148a52; transform: translateY(-1px); }
+  .btn-whatsapp { background: #25D366; color: white; font-size: 16px; padding: 16px 32px; width: 100%; justify-content: center; border-radius: 14px; }
+  .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,211,102,0.35); }
+
+  /* SCORE FINAL */
+  #ecran-score {
+    display: none; min-height: 100vh;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%);
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  .score-box {
+    background: white; border-radius: 24px; padding: 48px 36px;
+    text-align: center; max-width: 480px; width: 100%;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+  }
+  .score-emoji { font-size: 72px; margin-bottom: 16px; }
+  .score-titre { font-size: 24px; font-weight: 800; color: var(--bleu); margin-bottom: 8px; }
+  .score-nom { font-size: 16px; color: #666; margin-bottom: 24px; }
+  .score-cercle {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-clair));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin: 0 auto 24px; box-shadow: 0 8px 24px rgba(26,58,92,0.3);
+  }
+  .score-number { font-size: 42px; font-weight: 900; color: white; line-height: 1; }
+  .score-max { font-size: 14px; color: rgba(255,255,255,0.7); }
+  .score-message { font-size: 16px; color: #555; margin-bottom: 28px; line-height: 1.6; }
+
+  .btn-pdf { background: #e74c3c; color: white; font-size: 16px; padding: 16px 32px; width: 100%; justify-content: center; border-radius: 14px; margin-top: 12px; }
+  .btn-pdf:hover { background: #c0392b; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(231,76,60,0.35); }
+  .whatsapp-note { font-size: 13px; color: #888; margin-top: 16px; }
+
+  /* TABLEAU DE BORD */
+  #ecran-dashboard {
+    display: none; min-height: 100vh; background: #f5f5f5;
+  }
+  .dash-header {
+    background: var(--bleu); color: white; padding: 24px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dash-header h2 { font-size: 20px; }
+  .dash-content { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+  .dash-stat { background: white; border-radius: 12px; padding: 20px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .dash-stat h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 6px; }
+  .dash-stat p { font-size: 28px; font-weight: 800; color: var(--bleu); }
+  .reponse-card { background: white; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid var(--bleu-clair); }
+  .reponse-card .eleve-nom { font-weight: 700; color: var(--bleu); margin-bottom: 8px; font-size: 15px; }
+  .reponse-card .detail { font-size: 13px; color: #555; margin-bottom: 4px; }
+  .reponse-card .score-badge { display: inline-block; background: var(--bleu); color: white; padding: 2px 10px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+  .btn-fermer { background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+
+  /* CONFETTI */
+  .confetti-piece {
+    position: fixed; width: 10px; height: 10px; top: -10px;
+    animation: confettiFall linear forwards;
+    z-index: 9999; border-radius: 2px;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* LOGIN DASHBOARD */
+  #login-dashboard {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    align-items: center; justify-content: center; z-index: 100;
+  }
+  .login-dash-box {
+    background: white; border-radius: 16px; padding: 36px 32px;
+    width: 340px; max-width: 95vw; text-align: center;
+  }
+  .login-dash-box h3 { color: var(--bleu); margin-bottom: 16px; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ========== ÉCRAN LOGIN ÉLÈVE ========== -->
+<div id="ecran-login">
+  <div class="login-box">
+    <div class="emoji">🌟</div>
+    <h1>La Fête de Moumine</h1>
+    <p>Activité interactive — EB5</p>
+    <input type="text" id="input-prenom" placeholder="Ton prénom" />
+    <input type="text" id="input-nom" placeholder="Ton nom de famille" />
+    <select id="input-ecole" style="width:100%; padding:14px 18px; border:2px solid #e0e0e0; border-radius:10px; font-size:16px; margin-bottom:14px; outline:none; color:#333; background:white; appearance:auto;">
+      <option value="">-- Sélectionne ton école --</option>
+      <option>Choumrane</option>
+      <option>Fahs</option>
+      <option>Karamé</option>
+      <option>Kassir</option>
+      <option>Libération</option>
+      <option>Saad</option>
+      <option>Sader</option>
+      <option>Yaacoub</option>
+    </select>
+    <button class="btn-login" onclick="demarrer()">Commencer l'activité →</button>
+    <div class="erreur-login" id="erreur-login">Merci d'entrer ton prénom, ton nom et ton école.</div>
+  </div>
+</div>
+
+<!-- ========== ÉCRAN ACTIVITÉ ========== -->
+<div id="ecran-activite" class="hidden">
+  <header>
+    <h1>🌟 La Fête de Moumine</h1>
+    <p>Activités de compréhension et d'expression — EB5</p>
+    <div class="badge-eleve" id="badge-eleve"></div>
+  </header>
+
+  <div class="barre-prog-container">
+    <div class="barre-labels">
+      <span>Progression</span>
+      <span id="label-prog">0 / 8 activités</span>
+    </div>
+    <div class="barre-prog-bg">
+      <div class="barre-prog-fill" id="barre-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- SECTION 1 : TEXTE -->
+    <div class="section">
+      <span class="section-badge badge-bleu">📖 Le texte</span>
+      <h2>Lis attentivement ce texte</h2>
+      <div class="texte-support">
+        <p>C'est le grand jour ! Moumine a organisé une fête pour tous ses amis dans la vallée. Il a préparé des gâteaux au chocolat, des limonades fraîches et des guirlandes colorées. Tout le monde est invité : Snorkmaïden, le Petit Mythe, Trop-Tôt et même la Snorkmaïden.</p>
+        <br>
+        <p>Quand les amis arrivent, ils trouvent la maison décorée de fleurs et de lampions. Une musique douce résonne dans toute la vallée. Moumine accueille chacun avec un grand sourire et un morceau de gâteau.</p>
+        <br>
+        <p>« Je suis tellement heureux que vous soyez tous là ! » dit Moumine. Snorkmaïden lui offre un bouquet de fleurs roses. Le Petit Mythe, lui, apporte un dessin qu'il a fait lui-même.</p>
+        <br>
+        <p>La fête dure jusqu'au coucher du soleil. Quand les étoiles apparaissent dans le ciel, tout le monde rentre chez soi, le cœur plein de bonheur.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 2 : COMPRÉHENSION GLOBALE (QCM) -->
+    <div class="section vert">
+      <span class="section-badge badge-vert">🌍 Compréhension globale</span>
+      <h2>Réponds aux questions sur le texte</h2>
+
+      <div class="question" id="q1">
+        <p>1. Qui a organisé la fête ?</p>
+        <div class="options">
+          <button class="option-btn" onclick="verifierQCM('q1', this, false)">Snorkmaïden</button>
+          <button class="option-btn" onclick="verifierQCM('q1', this, true)">Moumine</button>
+          <button class="option-btn" onclick="verifierQCM('q1', this, false)">Le Petit Mythe</button>
+          <button class="option-btn" onclick="verifierQCM('q1', this, false)">Trop-Tôt</button>
+        </div>
+        <div class="feedback" id="fb-q1"></div>
+      </div>
+
+      <div class="question" id="q2">
+        <p>2. Qu'est-ce que Moumine a préparé pour la fête ?</p>
+        <div class="options">
+          <button class="option-btn" onclick="verifierQCM('q2', this, false)">Des pizzas et des jus</button>
+          <button class="option-btn" onclick="verifierQCM('q2', this, true)">Des gâteaux, des limonades et des guirlandes</button>
+          <button class="option-btn" onclick="verifierQCM('q2', this, false)">Des sandwichs et des ballons</button>
+          <button class="option-btn" onclick="verifierQCM('q2', this, false)">Des fleurs et des lampions</button>
+        </div>
+        <div class="feedback" id="fb-q2"></div>
+      </div>
+
+      <div class="question" id="q3">
+        <p>3. Qu'est-ce que le Petit Mythe apporte comme cadeau ?</p>
+        <div class="options">
+          <button class="option-btn" onclick="verifierQCM('q3', this, false)">Un bouquet de fleurs</button>
+          <button class="option-btn" onclick="verifierQCM('q3', this, false)">Un gâteau</button>
+          <button class="option-btn" onclick="verifierQCM('q3', this, true)">Un dessin fait par lui-même</button>
+          <button class="option-btn" onclick="verifierQCM('q3', this, false)">Une limonade</button>
+        </div>
+        <div class="feedback" id="fb-q3"></div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 : VRAI / FAUX -->
+    <div class="section or">
+      <span class="section-badge badge-or">✅ Vrai ou Faux</span>
+      <h2>Est-ce vrai ou faux ?</h2>
+
+      <div class="question" id="vf1">
+        <p>1. La fête se passe la nuit, sous la pluie.</p>
+        <div class="vf-groupe">
+          <button class="vf-btn" onclick="verifierVF('vf1', this, false, true)">✅ Vrai</button>
+          <button class="vf-btn" onclick="verifierVF('vf1', this, true, true)">❌ Faux</button>
+        </div>
+        <div class="feedback" id="fb-vf1"></div>
+      </div>
+
+      <div class="question" id="vf2">
+        <p>2. Snorkmaïden offre un bouquet de fleurs roses à Moumine.</p>
+        <div class="vf-groupe">
+          <button class="vf-btn" onclick="verifierVF('vf2', this, true, false)">✅ Vrai</button>
+          <button class="vf-btn" onclick="verifierVF('vf2', this, false, false)">❌ Faux</button>
+        </div>
+        <div class="feedback" id="fb-vf2"></div>
+      </div>
+
+      <div class="question" id="vf3">
+        <p>3. La fête dure jusqu'au coucher du soleil.</p>
+        <div class="vf-groupe">
+          <button class="vf-btn" onclick="verifierVF('vf3', this, true, false)">✅ Vrai</button>
+          <button class="vf-btn" onclick="verifierVF('vf3', this, false, false)">❌ Faux</button>
+        </div>
+        <div class="feedback" id="fb-vf3"></div>
+      </div>
+    </div>
+
+    <!-- SECTION 4 : TEXTE À TROUS -->
+    <div class="section violet">
+      <span class="section-badge badge-violet">✍️ Complète les phrases</span>
+      <h2>Remplis les trous avec les bons mots</h2>
+      <p style="font-size:13px; color:#888; margin-bottom:16px;">Mots à utiliser : <strong>fleurs · gâteaux · heureux · vallée · étoiles</strong></p>
+
+      <div class="trous-container" id="trous-container">
+        <p style="margin-bottom:14px;">
+          1. Moumine a préparé des <input class="trou" id="t1" placeholder="?" size="10">
+          au chocolat pour ses amis.
+        </p>
+        <p style="margin-bottom:14px;">
+          2. La fête se déroule dans la <input class="trou" id="t2" placeholder="?" size="10">
+          de Moumine.
+        </p>
+        <p style="margin-bottom:14px;">
+          3. Snorkmaïden offre un bouquet de <input class="trou" id="t3" placeholder="?" size="10">
+          roses.
+        </p>
+        <p style="margin-bottom:14px;">
+          4. Moumine dit qu'il est tellement <input class="trou" id="t4" placeholder="?" size="10">
+          de voir ses amis.
+        </p>
+        <p style="margin-bottom:14px;">
+          5. Quand les <input class="trou" id="t5" placeholder="?" size="10">
+          apparaissent, tout le monde rentre chez soi.
+        </p>
+      </div>
+      <br>
+      <button class="btn btn-primaire" onclick="verifierTrous()">Vérifier mes réponses ✓</button>
+      <div class="feedback" id="fb-trous"></div>
+    </div>
+
+    <!-- SECTION 5 : PRODUCTION ÉCRITE -->
+    <div class="section rouge">
+      <span class="section-badge badge-rouge">💬 Expression écrite</span>
+      <h2>À ton tour d'écrire !</h2>
+      <p style="font-size: 14px; color: #555; margin-bottom: 14px; line-height: 1.6;">
+        Imagine que tu es invité(e) à la fête de Moumine. Décris ce que tu vois, ce que tu ressens et ce que tu fais. <strong>(3 à 5 phrases)</strong>
+      </p>
+      <textarea id="production" placeholder="Écris ta réponse ici..." onkeyup="compterMots()"></textarea>
+      <div class="compteur" id="compteur-mots">0 mots</div>
+    </div>
+
+    <!-- BOUTON TERMINER -->
+    <div style="text-align: center; margin-top: 10px;">
+      <button class="btn btn-vert" style="font-size:16px; padding:16px 36px;" onclick="terminer()">
+        🎉 Terminer et envoyer mes réponses
+      </button>
+    </div>
+
+  </main>
+</div>
+
+<!-- ========== ÉCRAN SCORE FINAL ========== -->
+<div id="ecran-score" style="display:none; min-height:100vh; background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%); align-items:center; justify-content:center; padding:24px;">
+  <div class="score-box">
+    <div class="score-emoji" id="score-emoji">🌟</div>
+    <div class="score-titre">Bravo !</div>
+    <div class="score-nom" id="score-nom-affiche"></div>
+    <div class="score-cercle">
+      <div class="score-number" id="score-number">0</div>
+      <div class="score-max">/ 11 pts</div>
+    </div>
+    <div class="score-message" id="score-message"></div>
+    <button class="btn btn-whatsapp" onclick="envoyerWhatsApp()">
+      📲 Envoyer mes réponses à l'enseignante
+    </button>
+    <div class="whatsapp-note">Ton travail sera envoyé par WhatsApp à ton enseignante</div>
+    <button class="btn btn-pdf" onclick="telechargerPDF()">
+      📄 Télécharger mes réponses en PDF
+    </button>
+    <br>
+    <button onclick="afficherDashboard()" style="background:none; border:none; color:#aaa; font-size:12px; cursor:pointer; margin-top:8px;">
+      👩‍🏫 Espace enseignante
+    </button>
+  </div>
+</div>
+
+<!-- ========== LOGIN DASHBOARD ========== -->
+<div id="login-dashboard" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:100;">
+  <div class="login-dash-box">
+    <h3>🔒 Espace Enseignante</h3>
+    <input type="password" id="mdp-input" placeholder="Mot de passe" style="width:100%; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:15px; margin-bottom:12px; outline:none;" />
+    <button class="btn btn-primaire" style="width:100%;" onclick="validerMdp()">Entrer</button>
+    <br><br>
+    <button onclick="fermerLoginDash()" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:13px;">Annuler</button>
+    <div style="color:red; font-size:13px; margin-top:8px; display:none;" id="erreur-mdp">Mot de passe incorrect.</div>
+  </div>
+</div>
+
+<!-- ========== TABLEAU DE BORD ========== -->
+<div id="ecran-dashboard" style="display:none; min-height:100vh; background:#f5f5f5;">
+  <div class="dash-header">
+    <div>
+      <h2>👩‍🏫 Tableau de bord — La Fête de Moumine EB5</h2>
+      <p style="font-size:13px; opacity:0.7; margin-top:4px;">Résultats des élèves</p>
+    </div>
+    <button class="btn-fermer" onclick="fermerDashboard()">✕ Fermer</button>
+  </div>
+  <div class="dash-content">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:14px; margin-bottom:24px;">
+      <div class="dash-stat">
+        <h3>Élèves ayant envoyé</h3>
+        <p id="dash-total">0</p>
+      </div>
+      <div class="dash-stat">
+        <h3>Moyenne des scores</h3>
+        <p id="dash-moyenne">—</p>
+      </div>
+      <div class="dash-stat">
+        <h3>Meilleur score</h3>
+        <p id="dash-meilleur">—</p>
+      </div>
+    </div>
+    <h3 style="color:var(--bleu); margin-bottom:14px; font-size:15px;">📋 Réponses reçues</h3>
+    <div id="dash-liste">
+      <p style="color:#aaa; font-style:italic; font-size:14px;">Les réponses des élèves apparaîtront ici après qu'ils aient envoyé leur travail par WhatsApp.</p>
+      <br>
+      <div style="background:white; border-radius:12px; padding:20px; border-left:4px solid var(--or);">
+        <p style="font-size:14px; color:#555; line-height:1.7;">
+          💡 <strong>Note :</strong> Les réponses arrivent directement sur votre WhatsApp. Vous pouvez les consulter et les noter depuis cette page en ajoutant manuellement les résultats, ou directement dans WhatsApp.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== DONNÉES =====
+  let nomEleve = '';
+  let ecoleEleve = '';
+  let prenomEleve = '';
+  let scores = { q1: 0, q2: 0, q3: 0, vf1: 0, vf2: 0, vf3: 0, trous: 0 };
+  let reponsesEleve = {};
+  let activitesCompletees = new Set();
+  const TOTAL_ACTIVITES = 8;
+  const MDP = '1234';
+  const WHATSAPP_NUM = '96181809879';
+
+  // ===== LOGIN =====
+  function demarrer() {
+    prenomEleve = document.getElementById('input-prenom').value.trim();
+    nomEleve = document.getElementById('input-nom').value.trim();
+    ecoleEleve = document.getElementById('input-ecole').value.trim();
+    if (!prenomEleve || !nomEleve || !ecoleEleve) {
+      document.getElementById('erreur-login').style.display = 'block';
+      return;
+    }
+    document.getElementById('ecran-login').style.display = 'none';
+    document.getElementById('ecran-activite').classList.remove('hidden');
+    document.getElementById('badge-eleve').textContent = '👋 ' + prenomEleve + ' ' + nomEleve + ' · ' + ecoleEleve;
+  }
+
+  document.getElementById('input-nom').addEventListener('keypress', e => { if (e.key === 'Enter') demarrer(); });
+
+  // ===== PROGRESSION =====
+  function mettreAJourProg() {
+    const pct = (activitesCompletees.size / TOTAL_ACTIVITES) * 100;
+    document.getElementById('barre-fill').style.width = pct + '%';
+    document.getElementById('label-prog').textContent = activitesCompletees.size + ' / ' + TOTAL_ACTIVITES + ' activités';
+  }
+
+  // ===== QCM =====
+  function verifierQCM(id, btn, correct) {
+    const section = document.getElementById(id);
+    const btns = section.querySelectorAll('.option-btn');
+    btns.forEach(b => b.disabled = true);
+    const fb = document.getElementById('fb-' + id);
+    fb.style.display = 'block';
+    if (correct) {
+      btn.classList.add('correct');
+      scores[id] = 1;
+      fb.className = 'feedback correct';
+      fb.textContent = '✅ Bravo ! Bonne réponse !';
+    } else {
+      btn.classList.add('incorrect');
+      scores[id] = 0;
+      fb.className = 'feedback incorrect';
+      btns.forEach(b => { if (b.onclick.toString().includes('true')) b.classList.add('revele'); });
+      fb.textContent = '❌ Pas tout à fait ! La bonne réponse est surlignée.';
+    }
+    reponsesEleve[id] = btn.textContent;
+    activitesCompletees.add(id);
+    mettreAJourProg();
+  }
+
+  // ===== VRAI/FAUX =====
+  function verifierVF(id, btn, reponse, correctEstFaux) {
+    const section = document.getElementById(id);
+    const btns = section.querySelectorAll('.vf-btn');
+    btns.forEach(b => b.disabled = true);
+    const estCorrect = (reponse === !correctEstFaux);
+    const fb = document.getElementById('fb-' + id);
+    fb.style.display = 'block';
+    if (estCorrect) {
+      btn.classList.add('correct');
+      scores[id] = 1;
+      fb.className = 'feedback correct';
+      fb.textContent = '✅ Excellent ! C\'est la bonne réponse !';
+    } else {
+      btn.classList.add('incorrect');
+      scores[id] = 0;
+      fb.className = 'feedback incorrect';
+      fb.textContent = '❌ Ce n\'est pas la bonne réponse. Relis bien le texte !';
+    }
+    reponsesEleve[id] = btn.textContent;
+    activitesCompletees.add(id);
+    mettreAJourProg();
+  }
+
+  // ===== TROUS =====
+  const repTrous = { t1: 'gâteaux', t2: 'vallée', t3: 'fleurs', t4: 'heureux', t5: 'étoiles' };
+  function normaliser(s) { return s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+
+  function verifierTrous() {
+    let score = 0;
+    let reponsesT = [];
+    for (const [id, rep] of Object.entries(repTrous)) {
+      const input = document.getElementById(id);
+      const val = input.value;
+      if (normaliser(val) === normaliser(rep)) {
+        input.classList.remove('incorrect'); input.classList.add('correct');
+        score++;
+      } else {
+        input.classList.remove('correct'); input.classList.add('incorrect');
+      }
+      reponsesT.push(id + ': ' + (val || '(vide)'));
+    }
+    scores.trous = score;
+    reponsesEleve.trous = reponsesT.join(', ');
+    const fb = document.getElementById('fb-trous');
+    fb.style.display = 'block';
+    if (score === 5) {
+      fb.className = 'feedback correct';
+      fb.textContent = '✅ Parfait ! Tu as trouvé tous les mots !';
+    } else {
+      fb.className = 'feedback incorrect';
+      fb.textContent = `❌ ${score}/5 mots corrects. Les cases rouges ont besoin d'une correction.`;
+    }
+    activitesCompletees.add('trous');
+    mettreAJourProg();
+  }
+
+  // ===== COMPTEUR MOTS =====
+  function compterMots() {
+    const txt = document.getElementById('production').value.trim();
+    const nb = txt ? txt.split(/\s+/).length : 0;
+    document.getElementById('compteur-mots').textContent = nb + ' mot' + (nb > 1 ? 's' : '');
+    activitesCompletees.add('production');
+    mettreAJourProg();
+  }
+
+  // ===== TERMINER =====
+  function terminer() {
+    const production = document.getElementById('production').value.trim();
+    reponsesEleve.production = production || '(pas de réponse)';
+    activitesCompletees.add('production');
+
+    const scoreTotal = scores.q1 + scores.q2 + scores.q3 + scores.vf1 + scores.vf2 + scores.vf3 + scores.trous;
+
+    document.getElementById('ecran-activite').classList.add('hidden');
+    const ecranScore = document.getElementById('ecran-score');
+    ecranScore.style.display = 'flex';
+    document.getElementById('score-number').textContent = scoreTotal;
+    document.getElementById('score-nom-affiche').textContent = prenomEleve + ' ' + nomEleve;
+
+    let emoji, message;
+    if (scoreTotal >= 10) { emoji = '🌟'; message = 'Excellent travail ! Tu as très bien compris le texte !'; }
+    else if (scoreTotal >= 7) { emoji = '😊'; message = 'Bon travail ! Tu as bien compris l\'essentiel du texte.'; }
+    else if (scoreTotal >= 5) { emoji = '💪'; message = 'Continue tes efforts ! Relis le texte pour mieux comprendre.'; }
+    else { emoji = '📚'; message = 'Il faut retravailler ! N\'hésite pas à relire le texte attentivement.'; }
+
+    document.getElementById('score-emoji').textContent = emoji;
+    document.getElementById('score-message').textContent = message;
+
+    if (scoreTotal >= 7) lancerConfettis();
+  }
+
+  // ===== WHATSAPP =====
+  function envoyerWhatsApp() {
+    const scoreTotal = scores.q1 + scores.q2 + scores.q3 + scores.vf1 + scores.vf2 + scores.vf3 + scores.trous;
+    const prod = reponsesEleve.production || '(pas de réponse)';
+
+    const msg =
+`📚 *Activité HTML — La Fête de Moumine EB5*
+👤 Élève : ${prenomEleve} ${nomEleve}
+🏫 École : ${ecoleEleve}
+🏆 Score : ${scoreTotal}/11
+
+*QCM :*
+• Q1 : ${reponsesEleve.q1 || 'non répondu'} ${scores.q1 ? '✅' : '❌'}
+• Q2 : ${reponsesEleve.q2 || 'non répondu'} ${scores.q2 ? '✅' : '❌'}
+• Q3 : ${reponsesEleve.q3 || 'non répondu'} ${scores.q3 ? '✅' : '❌'}
+
+*Vrai / Faux :*
+• VF1 : ${reponsesEleve.vf1 || 'non répondu'} ${scores.vf1 ? '✅' : '❌'}
+• VF2 : ${reponsesEleve.vf2 || 'non répondu'} ${scores.vf2 ? '✅' : '❌'}
+• VF3 : ${reponsesEleve.vf3 || 'non répondu'} ${scores.vf3 ? '✅' : '❌'}
+
+*Texte à trous :* ${scores.trous}/5 ✅
+
+*Production écrite :*
+${prod}`;
+
+    const url = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  // ===== CONFETTIS =====
+  function lancerConfettis() {
+    const couleurs = ['#c9a84c','#2d6a9f','#1a7a4a','#e74c3c','#9b59b6','#f39c12','#1abc9c'];
+    for (let i = 0; i < 80; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background = couleurs[Math.floor(Math.random() * couleurs.length)];
+        c.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+        c.style.animationDelay = (Math.random() * 0.5) + 's';
+        c.style.width = (8 + Math.random() * 8) + 'px';
+        c.style.height = (8 + Math.random() * 8) + 'px';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
+      }, i * 30);
+    }
+  }
+
+  // ===== DASHBOARD =====
+  function afficherDashboard() {
+    document.getElementById('login-dashboard').style.display = 'flex';
+    setTimeout(() => document.getElementById('mdp-input').focus(), 100);
+  }
+
+  function fermerLoginDash() {
+    document.getElementById('login-dashboard').style.display = 'none';
+    document.getElementById('mdp-input').value = '';
+    document.getElementById('erreur-mdp').style.display = 'none';
+  }
+
+  function validerMdp() {
+    const mdp = document.getElementById('mdp-input').value;
+    if (mdp === MDP) {
+      fermerLoginDash();
+      document.getElementById('ecran-score').style.display = 'none';
+      document.getElementById('ecran-dashboard').style.display = 'block';
+      chargerDashboard();
+    } else {
+      document.getElementById('erreur-mdp').style.display = 'block';
+    }
+  }
+
+  function fermerDashboard() {
+    document.getElementById('ecran-dashboard').style.display = 'none';
+    document.getElementById('ecran-score').style.display = 'flex';
+  }
+
+  function chargerDashboard() {
+    // Le tableau de bord montre les réponses de la session en cours
+    const scoreTotal = scores.q1 + scores.q2 + scores.q3 + scores.vf1 + scores.vf2 + scores.vf3 + scores.trous;
+    const liste = document.getElementById('dash-liste');
+
+    if (prenomEleve) {
+      document.getElementById('dash-total').textContent = '1';
+      document.getElementById('dash-moyenne').textContent = scoreTotal + '/11';
+      document.getElementById('dash-meilleur').textContent = scoreTotal + '/11';
+
+      liste.innerHTML = `
+        <div class="reponse-card">
+          <div class="eleve-nom">👤 ${prenomEleve} ${nomEleve} — 🏫 ${ecoleEleve} <span class="score-badge">${scoreTotal}/11</span></div>
+          <div class="detail">✅ QCM : ${scores.q1 + scores.q2 + scores.q3}/3 · Vrai/Faux : ${scores.vf1 + scores.vf2 + scores.vf3}/3 · Trous : ${scores.trous}/5</div>
+          <div class="detail">✍️ Production : ${reponsesEleve.production || '(non rédigée)'}</div>
+        </div>
+        <div style="background:white; border-radius:12px; padding:16px 20px; border-left:4px solid var(--or); margin-top:12px;">
+          <p style="font-size:13px; color:#666; line-height:1.7;">📲 Les réponses complètes ont été envoyées par WhatsApp. Consultez votre messagerie pour accéder à tous les détails.</p>
+        </div>`;
+    }
+  }
+
+  document.getElementById('mdp-input').addEventListener('keypress', e => { if (e.key === 'Enter') validerMdp(); });
+
+  // ===== PDF =====
+  function telechargerPDF() {
+    const scoreTotal = scores.q1 + scores.q2 + scores.q3 + scores.vf1 + scores.vf2 + scores.vf3 + scores.trous;
+    const prod = reponsesEleve.production || '(pas de réponse)';
+    const date = new Date().toLocaleDateString('fr-FR');
+
+    const html = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Réponses — ${prenomEleve} ${nomEleve}</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; color: #222; font-size: 14px; }
+  h1 { color: #1a3a5c; font-size: 20px; border-bottom: 3px solid #c9a84c; padding-bottom: 8px; }
+  .info { background: #f0f6ff; padding: 14px 18px; border-radius: 8px; margin: 16px 0; }
+  .info p { margin: 4px 0; }
+  .score-big { font-size: 36px; font-weight: 900; color: #1a3a5c; text-align: center; margin: 20px 0; }
+  .section { margin: 20px 0; }
+  .section h2 { font-size: 15px; color: #2d6a9f; border-left: 4px solid #c9a84c; padding-left: 10px; }
+  .rep { margin: 8px 0; padding: 8px 12px; background: #f8f8f8; border-radius: 6px; }
+  .ok { color: #1a6e4a; } .ko { color: #c0392b; }
+  .prod { background: #fdf8f0; border-left: 4px solid #c9a84c; padding: 12px 16px; border-radius: 6px; line-height: 1.7; }
+  .footer { margin-top: 40px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<h1>📚 La Fête de Moumine — EB5</h1>
+<div class="info">
+  <p><strong>Élève :</strong> ${prenomEleve} ${nomEleve}</p>
+  <p><strong>École :</strong> ${ecoleEleve}</p>
+  <p><strong>Date :</strong> ${date}</p>
+</div>
+<div class="score-big">🏆 Score : ${scoreTotal} / 11</div>
+<div class="section">
+  <h2>QCM — Compréhension globale</h2>
+  <div class="rep"><span class="${scores.q1 ? 'ok' : 'ko'}">${scores.q1 ? '✅' : '❌'}</span> Q1 : ${reponsesEleve.q1 || 'non répondu'}</div>
+  <div class="rep"><span class="${scores.q2 ? 'ok' : 'ko'}">${scores.q2 ? '✅' : '❌'}</span> Q2 : ${reponsesEleve.q2 || 'non répondu'}</div>
+  <div class="rep"><span class="${scores.q3 ? 'ok' : 'ko'}">${scores.q3 ? '✅' : '❌'}</span> Q3 : ${reponsesEleve.q3 || 'non répondu'}</div>
+</div>
+<div class="section">
+  <h2>Vrai / Faux</h2>
+  <div class="rep"><span class="${scores.vf1 ? 'ok' : 'ko'}">${scores.vf1 ? '✅' : '❌'}</span> VF1 : ${reponsesEleve.vf1 || 'non répondu'}</div>
+  <div class="rep"><span class="${scores.vf2 ? 'ok' : 'ko'}">${scores.vf2 ? '✅' : '❌'}</span> VF2 : ${reponsesEleve.vf2 || 'non répondu'}</div>
+  <div class="rep"><span class="${scores.vf3 ? 'ok' : 'ko'}">${scores.vf3 ? '✅' : '❌'}</span> VF3 : ${reponsesEleve.vf3 || 'non répondu'}</div>
+</div>
+<div class="section">
+  <h2>Texte à trous — ${scores.trous}/5</h2>
+  <div class="rep">Résultat : ${scores.trous} mot(s) correct(s) sur 5</div>
+</div>
+<div class="section">
+  <h2>Production écrite</h2>
+  <div class="prod">${prod.replace(/\n/g, '<br>')}</div>
+</div>
+<div class="footer">ulf-may.github.io/activites-francais · Document généré le ${date}</div>
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reponses_${prenomEleve}_${nomEleve}_MouMine_EB5.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+</script>
+</body>
+</html>
